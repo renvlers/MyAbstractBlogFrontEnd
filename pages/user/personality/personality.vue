@@ -1,12 +1,13 @@
-
 <template>
-	<view class="" :class="{ 'dark-theme': darkTheme }">
-		<u-form ref="validateFormRef" :model="user" :label-width="150">
-			<u-form-item :label="translations.个性签名" prop="personality">
-				<u-input v-model="user.u_signature" :placeholder="translations.编辑你的个性签名"/>
-			</u-form-item>
-		</u-form>
-		<u-button @click="submit()">{{translations.保存}}</u-button>
+	<view class="global-view" :class="{ 'dark-theme': darkTheme }">
+		<view class="container">
+			<u-form ref="validateFormRef" :model="user" :label-width="150">
+				<u-form-item :label="translations.个性签名" prop="personality">
+					<u-input class="input-box" v-model="user.u_signature" :placeholder="translations.编辑你的个性签名" />
+				</u-form-item>
+			</u-form>
+			<u-button class="green-button" style="margin: 20rpx 0 0;" @click="submit()">{{translations.保存}}</u-button>
+		</view>
 	</view>
 </template>
 
@@ -20,9 +21,9 @@
 				user: {
 					u_nickname: '',
 					u_password: '',
-					u_type:0,
+					u_type: 0,
 					u_signature: '',
-					u_email:'',
+					u_email: '',
 					u_id: 0,
 				},
 				rules: {
@@ -40,10 +41,10 @@
 		onShow() { //在页面显示的时候调用这个周期函数
 			//从storage中读取用户信息
 			let user = uni.getStorageSync("user")
-			   this.user = user
+			this.user = user
 			console.log(this.user)
 		},
-		onLoad(){
+		onLoad() {
 			uni.setNavigationBarTitle({
 				title: this.translations.个性签名
 			});
@@ -74,9 +75,9 @@
 								console.log(res)
 								//修改成功，跳转到个人中心
 								if (res.data.code == 200) {
-									uni.setStorageSync("user",user)
+									uni.setStorageSync("user", user)
 									uni.reLaunch({
-										url:'/pages/profile/profile'
+										url: '/pages/profile/profile'
 									})
 								}
 							},
@@ -86,13 +87,16 @@
 						})
 					}
 
-				}
-				)
+				})
 			}
 		},
 	}
 </script>
 
-<style>
-
+<style lang="scss">
+	.input-box {
+		background-color: white;
+		border-radius: 10rpx;
+		box-shadow: 0rpx 0rpx 10rpx rgba(0, 0, 0, 0.1);
+	}
 </style>

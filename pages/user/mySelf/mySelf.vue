@@ -1,31 +1,34 @@
 <template>
-	<view>
-		<view class="wrap">
+		<view class="global-view">
 			<view class="u-avatar-wrap">
-				<image style="width: 100px; height: 100px" class="u-avatar-demo" alt="头像无法正常加载" :src="user.u_avatar_url" mode="aspectFill" @click="chooseAvatar"></image>
+				<image style="width: 100px; height: 100px" class="u-avatar-demo" alt="头像无法正常加载" :src="user.u_avatar_url"
+					mode="aspectFill" @click="chooseAvatar"></image>
 			</view>
 			<!-- <u-button @click="upload">上传头像</u-button> -->
-			<u-form-item label="昵称">
-				<u-input border="border" v-model="user.u_nickname" />
-			</u-form-item>
-			<u-form-item label="账号">
-				<u-input border="border" v-model="user.u_id" disabled />
-			</u-form-item>
-			<u-form-item label="性别">
-				<u-input v-model="user.u_gender" :type="type" :border="border" @click="show = true" />
-				<u-action-sheet :list="actionSheetList" v-model="show" @click="actionSheetCallback"></u-action-sheet>
-			</u-form-item>
-			<u-form-item label="生日">
-				<u-input border="border" v-model="user.u_birth_date" />
-				<u-calendar v-model="show_calendar" :mode="mode" @change="change"></u-calendar>
-				<u-button @click="choose()">选择</u-button>
-			</u-form-item>
-			<u-form-item label="邮箱">
-				<u-input border="border" v-model="user.u_email" disabled />
-			</u-form-item>
-			<button class="save" @click="save()" type="primary">保存</button>
+			<view class="container">
+				<u-form-item label="昵称">
+					<u-input border="border" v-model="user.u_nickname" class="input-box"/>
+				</u-form-item>
+				<u-form-item label="账号">
+					<u-input border="border" v-model="user.u_id" disabled class="input-box"/>
+				</u-form-item>
+				<u-form-item label="性别">
+					<u-input v-model="user.u_gender" :type="type" :border="border" @click="show = true" class="input-box"/>
+					<u-action-sheet :list="actionSheetList" v-model="show"
+						@click="actionSheetCallback"></u-action-sheet>
+				</u-form-item>
+				<u-form-item label="生日">
+					<u-input border="border" v-model="user.u_birth_date" class="input-box"/>
+					<u-calendar v-model="show_calendar" :mode="mode" @change="change"></u-calendar>
+					<u-button style="margin: 0 0 0 20rpx; height: 5.5vh" @click="choose()">选择</u-button>
+				</u-form-item>
+				<u-form-item label="邮箱">
+					<u-input border="border" v-model="user.u_email" disabled class="input-box"/>
+				</u-form-item>
+			</view>
+
+			<button class="green-button" style="width: 92%; margin-top: 40rpx" @click="save()" type="primary">保存</button>
 		</view>
-	</view>
 
 </template>
 
@@ -62,7 +65,7 @@
 		created() {
 			// 监听从裁剪页发布的事件，获得裁剪结果
 			uni.$on('uAvatarCropper', path => {
-                this.avatar = path;
+				this.avatar = path;
 				// 可以在此上传到服务端
 				this.upload()
 			})
@@ -76,23 +79,23 @@
 			}
 		},
 		methods: {
-			async upload(){
+			async upload() {
 				await uni.uploadFile({
 					url: '/api/file/upload',
 					filePath: this.avatar,
 					name: 'file',
 					success: (res) => {
 						let testData = JSON.parse(res.data)
-						console.log("upload-res:",testData.code)
-						if(testData.code === 200){
+						console.log("upload-res:", testData.code)
+						if (testData.code === 200) {
 							this.user.u_avatar_url = testData.data
-							console.log("xxxx:",this.user)
+							console.log("xxxx:", this.user)
 							/* this.save()*/
 						}
 					}
 				});
 			},
-			
+
 			change(e) {
 				console.log("e:", e.result);
 				this.user.u_birth_date = e.result
@@ -136,7 +139,7 @@
 									if (res.data.code == 200) {
 										console.log('查询成功')
 										console.log("birthday1", res.data.data.u_birth_date)
-										uni.setStorageSync('user',res.data.data)
+										uni.setStorageSync('user', res.data.data)
 										uni.reLaunch({
 											url: '/pages/profile/profile',
 										})
@@ -175,5 +178,10 @@
 		width: 150rpx;
 		height: 150rpx;
 		border-radius: 100rpx;
+	}
+	.input-box {
+		background-color: white;
+		border-radius: 10rpx;
+		box-shadow: 0rpx 0rpx 10rpx rgba(0, 0, 0, 0.1);
 	}
 </style>

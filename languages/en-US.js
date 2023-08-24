@@ -317,5 +317,6 @@ export default {
 	取关: "Unfollow",
 	修改文章: "Edit Article",
 	上传封面: "Upload a Cover",
-	取消上传: "Cancel Cover Update"
+	取消上传: "Cancel Cover Update",
+	智能聊天: "Smart Chat"
 };

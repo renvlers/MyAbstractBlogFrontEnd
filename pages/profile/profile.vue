@@ -29,8 +29,10 @@
 					<u-cell-item icon="home" :title="translations.我的主页" @click="myCollection()"></u-cell-item>
 					<u-cell-item icon="heart" :title="translations.我的关注" @click="myFollowing()"></u-cell-item>
 					<u-cell-item icon="account" :title="translations.我的粉丝" @click="myFans()"></u-cell-item>
-					<u-cell-item icon="more-dot-fill" :title="translations.关于" @click="about()"></u-cell-item>
+					<u-cell-item icon="chat" :title="translations.智能聊天" @click="smartChat()"></u-cell-item>
 					<u-cell-item icon="setting" :title="translations.设置" @click="set"></u-cell-item>
+					<u-cell-item icon="more-dot-fill" :title="translations.关于" @click="about()"></u-cell-item>
+					
 				</u-cell-group>
 			</view>
 			<view class="container">
@@ -181,6 +183,11 @@
 				uni.navigateTo({
 					url: '/pages/myhome/myhome'
 				})
+			},
+			smartChat() {
+				uni.navigateTo({
+					url: '/pages/spark/spark'
+				});
 			}
 
 		}

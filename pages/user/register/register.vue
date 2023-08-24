@@ -197,7 +197,6 @@
 		background-color: white;
 		border-radius: 10rpx;
 		box-shadow: 0rpx 0rpx 10rpx rgba(0, 0, 0, 0.1);
-		
 	}
 	.title {
 	  text-align: center;

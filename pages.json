@@ -224,6 +224,14 @@
 				"navigationBarTitleText": "头像裁剪",
 				"navigationBarBackgroundColor": "#000000"
 			}
+		},
+		{
+			"path": "pages/spark/spark",
+			"style": {
+				"navigationBarTitleText": "智能聊天",
+				"enablePullDownRefresh": false
+			}
+		
 		}
 	],
 	"tabBar": {
