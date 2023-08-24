@@ -2,7 +2,7 @@
 	<view class="global-view">
 		<view class="container">
 			<view :class="{ 'dark-theme': darkTheme }">
-				<u-divider style="margin-top: 4%;">向左滑动对用户使用更多操作</u-divider>
+				<u-divider style="margin-top: 4%;">{{translations.向左滑动对用户使用更多操作}}</u-divider>
 				<view>
 					<u-swipe-action :show="item.show" :index="index" v-for="(item, index) in list" :key="item.use_u_id"
 						@click="unfollow(index, item.use_u_id)" @open="open(index)" :options="options">
@@ -21,6 +21,8 @@
 </template>
 
 <script>
+	import Chinese from '@/languages/zh-CN'
+	import English from '@/languages/en-US'
 	export default {
 		data() {
 			return {
@@ -35,7 +37,8 @@
 					style: {
 						backgroundColor: '#28ff07'
 					}
-				}, ]
+				}, ],
+				translations: this.language === "en-US" ? English : Chinese
 			};
 		},
 		created() {
@@ -57,6 +60,9 @@
 				});
 		},
 		onLoad() {
+			uni.setNavigationBarTitle({
+				title: this.translations.我的关注
+			});
 			if (this.darkTheme) {
 				uni.setNavigationBarColor({
 					frontColor: '#ffffff', // 这是文字颜色，设置为白色
@@ -89,16 +95,16 @@
 					.then(response => response.json())
 					.then(data => {
 						if (data.code === 200) {
-							this.$u.toast('取关成功');
+							this.$u.toast(this.translations.取关成功);
 							// Remove unfollowed user from the list
 							this.list.splice(index, 1);
 						} else {
-							this.$u.toast('取关失败');
+							this.$u.toast(this.translations.取关失败);
 						}
 					})
 					.catch(error => {
 						console.error('取消关注时出错：', error);
-						this.$u.toast('取关失败');
+						this.$u.toast(this.translations.取关失败);
 					});
 			},
 

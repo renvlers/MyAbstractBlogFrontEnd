@@ -1,21 +1,23 @@
 <template>
 	<view class="global-view" :class="{ 'dark-theme': darkTheme }">
 		<view class="container">
-			<span class="label">动态正文</span>
+			<span class="label">{{translations.动态正文}}</span>
 			<textarea v-model="newDynamics.content" class="dynamics-content" name="dynamic-content" id="" cols="30" rows="10" maxlength="-1"></textarea>
 		</view>
-		<view v-if="false" class="container">
-			<span class="label">添加图片（不超过4张）</span>
+		<view v-if="true" class="container">
+			<span class="label">{{translations.添加图片}}（{{translations.不超过}} 4 {{translations.张}}）</span>
 			<uni-file-picker :image-styles="gridStyle" file-mediatype="image" mode="grid"
 				file-extname="png,jpg,bmp,gif,jpeg,tiff" :limit="4" :del-icon="true" />
 		</view>
 		<view class="container">
-			<button class="green-button" @click="postDynamics">发布</button>
+			<button class="green-button" @click="postDynamics">{{translations.发布}}</button>
 		</view>
 	</view>
 </template>
 
 <script>
+	import Chinese from '@/languages/zh-CN'
+	import English from '@/languages/en-US'
 	export default {
 		data() {
 			return {
@@ -35,7 +37,8 @@
 					img2Url: null,
 					img3Url: null,
 					img4Url: null
-				}
+				},
+				translations: this.language === "en-US" ? English : Chinese
 			}
 		},
 		methods: {

@@ -46,6 +46,8 @@
 </template>
 
 <script>
+	import Chinese from '@/languages/zh-CN'
+	import English from '@/languages/en-US'
 	export default {
 		data() {
 			return {
@@ -59,6 +61,29 @@
 			this.scrollTop = e.scrollTop;
 		},
 		onLoad() {
+			uni.setNavigationBarTitle({
+				title: this.translations.动态
+			});
+			uni.setTabBarItem({
+				index: 0,
+				text: this.translations.首页
+			});
+			uni.setTabBarItem({
+				index: 1,
+				text: this.translations.分类
+			});
+			uni.setTabBarItem({
+				index: 2,
+				text: this.translations.投稿
+			});
+			uni.setTabBarItem({
+				index: 3,
+				text: this.translations.动态
+			});
+			uni.setTabBarItem({
+				index: 4,
+				text: this.translations.我的
+			});
 			if (this.darkTheme) {
 				uni.setNavigationBarColor({
 					frontColor: '#ffffff', // 这是文字颜色，设置为白色

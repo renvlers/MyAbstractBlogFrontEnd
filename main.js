@@ -4,6 +4,7 @@ import uView from 'uview-ui';
 Vue.use(uView);
 
 Vue.prototype.darkTheme = uni.getStorageSync("theme");  
+Vue.prototype.language = "en-US";
 
 // #ifndef VUE3
 import Vue from 'vue'

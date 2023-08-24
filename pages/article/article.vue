@@ -43,13 +43,13 @@
 			<span v-for="items of article.tags">{{items}}</span>
 		</view>
 		<view class="container" id="button-likes-and-favorties">
-			<button @click="sendLike" class="likes-button">{{!isLiked?"点赞":"已点赞"}}</button>
-			<button @click="sendFav" class="favorites-button">{{!isFavorite?"收藏":"已收藏"}}</button>
+			<button @click="sendLike" class="likes-button">{{!isLiked?translations.点赞:translations.已点赞}}</button>
+			<button @click="sendFav" class="favorites-button">{{!isFavorite?translations.收藏:translations.已收藏}}</button>
 		</view>
 		<view class="container" id="comments">
 			<span>
-				<p>评论({{comments.length}})</p>
-				<button class="new-comment-button" @click="toggleCommentTextBox()">发表评论</button>
+				<p>{{translations.评论}}({{comments.length}})</p>
+				<button class="new-comment-button" @click="toggleCommentTextBox()">{{translations.发表评论}}</button>
 			</span>
 			<hr class="article-horizonal-line">
 			<view class="comment-box" v-for="(item, index) of comments" :key="-item.cid">
@@ -76,10 +76,10 @@
 		<transition name="menu-slide-up">
 			<view v-if="showMenu" ref="menu" class="menu">
 				<ul>
-					<li ref="copy" @click="copyContent()">复制</li>
-					<li v-if="isMine" @click="toggleEditTextBox()">修改</li>
-					<li v-if="isMine" style="color: red;" @click="deleteComment()">删除</li>
-					<li ref="cancel" @click="closeAllMenu()">取消</li>
+					<li ref="copy" @click="copyContent()">{{translations.复制}}</li>
+					<li v-if="isMine" @click="toggleEditTextBox()">{{translations.修改}}</li>
+					<li v-if="isMine" style="color: red;" @click="deleteComment()">{{translations.删除}}</li>
+					<li ref="cancel" @click="closeAllMenu()">{{translations.删除}}</li>
 				</ul>
 			</view>
 		</transition>
@@ -91,15 +91,15 @@
 			<view class="text-box" v-if="showTextBox">
 				<textarea v-model="newComments.content" name="comment" maxlength="-1"></textarea>
 				<view class="text-box-buttons">
-					<button class="new-comment-button" @click="sendNewComment()">发送</button>
-					<button class="new-comment-button" @click="closeAllMenu()">取消</button>
+					<button class="new-comment-button" @click="sendNewComment()">{{translations.发送}}</button>
+					<button class="new-comment-button" @click="closeAllMenu()">{{translations.取消}}</button>
 				</view>
 			</view>
 			<view class="text-box" v-if="showEditTextBox">
 				<textarea v-model="editComments.content" name="edit-comment" maxlength="-1"></textarea>
 				<view class="text-box-buttons">
-					<button class="new-comment-button" @click="editComment()">修改</button>
-					<button class="new-comment-button" @click="closeAllMenu()">取消</button>
+					<button class="new-comment-button" @click="editComment()">{{translations.修改}}</button>
+					<button class="new-comment-button" @click="closeAllMenu()">{{translations.取消}}</button>
 				</view>
 			</view>
 		</transition>
@@ -107,6 +107,8 @@
 </template>
 
 <script>
+	import Chinese from '@/languages/zh-CN'
+	import English from '@/languages/en-US'
 	export default {
 		data() {
 			return {
@@ -137,7 +139,8 @@
 				editComments: {
 					content: ""
 				},
-				comments: []
+				comments: [],
+				translations: this.language === "en-US" ? English : Chinese
 			}
 		},
 		onLoad(para) {
@@ -184,7 +187,7 @@
 							method: "PUT",
 							fail: () => {
 								uni.showToast({
-									title: "阅读量增加出现错误",
+									title: this.translations.阅读量增加出现错误,
 									icon: "error"
 								});
 							}
@@ -236,7 +239,7 @@
 							},
 							fail: () => {
 								uni.showToast({
-									title: "评论获取失败",
+									title: this.translations.评论获取失败,
 									icon: "error"
 								})
 							}
@@ -252,7 +255,7 @@
 							},
 							fail: (error) => {
 								uni.showToast({
-									title: "信息获取存在错误",
+									title: this.translations.信息获取存在错误,
 									icon: "error"
 								})
 							}
@@ -268,7 +271,7 @@
 							},
 							fail: (error) => {
 								uni.showToast({
-									title: "信息获取存在错误",
+									title: this.translations.信息获取存在错误,
 									icon: "error"
 								})
 							}
@@ -276,7 +279,7 @@
 					},
 					fail: function(response) {
 						uni.showToast({
-							title: "文章加载失败",
+							title: this.translations.文章加载失败,
 							icon: "error"
 						});
 					}
@@ -307,7 +310,7 @@
 					this.showTextBox = !this.showTextBox;
 				else{
 					uni.showToast({
-						title: "请先登录账号",
+						title: this.translations.请先登录账号,
 						icon: "error",
 						success: () => {
 							setTimeout(() => {uni.navigateTo({url: "/pages/login/login"})}, 1500);
@@ -335,7 +338,7 @@
 					},
 					success: (response) => {
 						uni.showToast({
-							title: "发表成功",
+							title: this.translations.发表成功,
 							icon: "success"
 						});
 						this.toggleCommentTextBox();
@@ -366,7 +369,7 @@
 							},
 							fail: () => {
 								uni.showToast({
-									title: "评论获取失败",
+									title: this.translations.评论获取失败,
 									icon: "error"
 								})
 							}
@@ -374,7 +377,7 @@
 					},
 					fail: () => {
 						uni.showToast({
-							title: "发表失败",
+							title: this.translations.发表失败,
 							icon: "error"
 						});
 					}
@@ -386,7 +389,7 @@
 					method: "PUT",
 					success: (response) => {
 						uni.showToast({
-							title: "修改成功",
+							title: this.translations.修改成功,
 							icon: "success"
 						});
 						this.closeAllMenu();
@@ -417,7 +420,7 @@
 							},
 							fail: () => {
 								uni.showToast({
-									title: "评论获取失败",
+									title: this.translations.评论获取失败,
 									icon: "error"
 								})
 							}
@@ -425,7 +428,7 @@
 					},
 					fail: () => {
 						uni.showToast({
-							title: "修改失败",
+							title: this.translations.修改失败,
 							icon: "error"
 						});
 					}
@@ -437,7 +440,7 @@
 					method: "DELETE",
 					success: (response) => {
 						uni.showToast({
-							title: "删除成功",
+							title: this.translations.删除成功,
 							icon: "success"
 						});
 						this.toggleMenu(this.currComment.cid);
@@ -468,7 +471,7 @@
 							},
 							fail: () => {
 								uni.showToast({
-									title: "评论获取失败",
+									title: this.translations.评论获取失败,
 									icon: "error"
 								})
 							}
@@ -476,7 +479,7 @@
 					},
 					fail: () => {
 						uni.showToast({
-							title: "删除失败",
+							title: this.translations.删除失败,
 							icon: "error"
 						});
 					}
@@ -485,9 +488,9 @@
 			copyContent() {
 				uni.setClipboardData({
 					data: this.currComment.ctext,
-					success: function() {
+					success: () => {
 						uni.showToast({
-							title: '评论已复制'
+							title: this.translations.评论已复制
 						});
 					}
 				});
@@ -496,7 +499,7 @@
 			sendLike() {
 				if (!uni.getStorageSync("user")) {
 					uni.showToast({
-						title: "请先登录账号",
+						title: this.translations.请先登录账号,
 						icon: "error",
 						success: () => {
 							setTimeout(() => {uni.navigateTo({url: "/pages/login/login"})}, 1500);
@@ -509,7 +512,7 @@
 							method: "POST",
 							success: (response) => {
 								uni.showToast({
-									title: "点赞成功",
+									title: this.translations.点赞成功,
 									icon: "success"
 								});
 								uni.request({
@@ -532,7 +535,7 @@
 									},
 									fail: (error) => {
 										uni.showToast({
-											title: "信息获取存在错误",
+											title: this.translations.信息获取存在错误,
 											icon: "error"
 										})
 									}
@@ -540,7 +543,7 @@
 							},
 							fail: (error) => {
 								uni.showToast({
-									title: "点赞失败",
+									title: this.translations.点赞失败,
 									icon: "error"
 								});
 							}
@@ -554,7 +557,7 @@
 							},
 							success: (response) => {
 								uni.showToast({
-									title: "已取消点赞",
+									title: this.translations.已取消点赞,
 									icon: "success"
 								});
 								uni.request({
@@ -577,7 +580,7 @@
 									},
 									fail: (error) => {
 										uni.showToast({
-											title: "信息获取存在错误",
+											title: this.translations.信息获取存在错误,
 											icon: "error"
 										})
 									}
@@ -585,7 +588,7 @@
 							},
 							fail: (error) => {
 								uni.showToast({
-									title: "取消点赞失败",
+									title: this.translations.取消点赞失败,
 									icon: "error"
 								});
 							}
@@ -596,7 +599,7 @@
 			sendFav() {
 				if (!uni.getStorageSync("user")) {
 					uni.showToast({
-						title: "请先登录账号",
+						title: this.translations.请先登录账号,
 						icon: "error",
 						success: () => {
 							setTimeout(() => {uni.navigateTo({url: "/pages/login/login"})}, 1500);
@@ -609,7 +612,7 @@
 							method: "POST",
 							success: (response) => {
 								uni.showToast({
-									title: "收藏成功",
+									title: this.translations.收藏成功,
 									icon: "success"
 								});
 								uni.request({
@@ -632,7 +635,7 @@
 									},
 									fail: (error) => {
 										uni.showToast({
-											title: "信息获取存在错误",
+											title: this.translations.信息获取存在错误,
 											icon: "error"
 										})
 									}
@@ -640,7 +643,7 @@
 							},
 							fail: (error) => {
 								uni.showToast({
-									title: "收藏失败",
+									title: this.translations.收藏失败,
 									icon: "error"
 								});
 							}
@@ -654,7 +657,7 @@
 							},
 							success: (response) => {
 								uni.showToast({
-									title: "已取消收藏",
+									title: this.translations.已取消收藏,
 									icon: "success"
 								});
 								uni.request({
@@ -677,7 +680,7 @@
 									},
 									fail: (error) => {
 										uni.showToast({
-											title: "信息获取存在错误",
+											title: this.translations.信息获取存在错误,
 											icon: "error"
 										})
 									}
@@ -685,7 +688,7 @@
 							},
 							fail: (error) => {
 								uni.showToast({
-									title: "取消收藏失败",
+									title: this.translations.取消收藏失败,
 									icon: "error"
 								});
 							}

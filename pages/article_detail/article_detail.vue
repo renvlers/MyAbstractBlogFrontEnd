@@ -9,32 +9,39 @@
 			</view>
 		</view>
 	</u-card> -->
-		<view class="global-view" :class="{ 'dark-theme': darkTheme }">
-			<view class="container">
-				<view class="article-box" v-for="item of articleslist" :key="item.a_id" @click="toDetail(item.a_id)">
-					<image :src="item.a_cover_url ? item.a_cover_url : '/static/svg/default-cover.svg'" alt="文章封面图"
-						class="article-cover">
-						<view class="article-info">
-							<h1 class="title">{{item.a_title}}</h1>
-							<p class="tabloid" style="font-size: 1em;">简介：{{item.a_tabloid}}</p>
-						</view>
-						<image src="/static/svg/arrow.svg" alt="" class="right-arrow">
-				</view>
+	<view class="global-view" :class="{ 'dark-theme': darkTheme }">
+		<view class="container">
+			<view class="article-box" v-for="item of articleslist" :key="item.a_id" @click="toDetail(item.a_id)">
+				<image :src="item.a_cover_url ? item.a_cover_url : '/static/svg/default-cover.svg'" :alt="translations.文章封面图"
+					class="article-cover">
+					<view class="article-info">
+						<h1 class="title">{{item.a_title}}</h1>
+						<p class="tabloid" style="font-size: 1em;">{{translations.简介}}：{{item.a_tabloid}}</p>
+					</view>
+					<image src="/static/svg/arrow.svg" alt="" class="right-arrow">
 			</view>
 		</view>
+	</view>
 </template>
 
 <script>
+	import Chinese from '@/languages/zh-CN'
+	import English from '@/languages/en-US'
 	export default {
+
 		data() {
 			return {
 				articleslist: [],
 				title: '',
 				subTitle: '',
 				thumb: '',
+				translations: this.language === "en-US" ? English : Chinese
 			}
 		},
 		onLoad: function(option) {
+			uni.setNavigationBarTitle({
+				title: this.translations.分类详情
+			})
 			if (this.darkTheme) {
 				uni.setNavigationBarColor({
 					frontColor: '#ffffff', // 这是文字颜色，设置为白色
@@ -59,7 +66,7 @@
 			})
 		},
 		methods: {
-			toDetail(aid){
+			toDetail(aid) {
 				console.log("" + aid);
 				uni.navigateTo({
 					url: `/pages/article/article?aid=${aid}`

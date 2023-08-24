@@ -31,6 +31,8 @@
 </template>
 
 <script>
+	import Chinese from '@/languages/zh-CN'
+	import English from '@/languages/en-US'
 	export default {
 		data() {
 			return {
@@ -45,6 +47,7 @@
 				error: "",
 				u_nickname: "",
 				u_avatar_url: "",
+				translations: this.language === "en-US" ? English : Chinese
 			};
 		},
 		onLoad(para) {

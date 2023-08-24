@@ -2,27 +2,20 @@
 	<view class="global-view wrap" :class="{ 'dark-theme': darkTheme }">
 		<view class="container">
 			<view class="content">
-				<view class="title">登录BLOG</view>
+				<view class="title">{{translations.登录}} BLOG</view>
 				<u-form ref="validateFormRef" :model="validateForm.user">
-					<u-form-item label="邮箱" prop="mail" :border-bottom="false">
+					<u-form-item :label="translations.邮箱" prop="mail" :border-bottom="false">
 						<u-input class="input-box" v-model="validateForm.user.mail" placeholder="" />
 					</u-form-item>
-					<u-form-item label="密码" prop="password" :border-bottom="false">
+					<u-form-item :label="translations.密码" prop="password" :border-bottom="false">
 						<u-input type="password" class="input-box" v-model="validateForm.user.password"
 							placeholder="" />
 					</u-form-item>
 				</u-form>
-				<button class="green-button" style="margin-top: 20rpx;" @click="login()">登录</button>
+				<button class="green-button" style="margin-top: 20rpx;" @click="login()">{{translations.登录}}</button>
 				<view class="alternative">
-					<view class="password" @click="toRegister()">注册</view>
-					<view class="issue" @click="forget()">忘记密码</view>
-				</view>
-			</view>
-			<view class="buttom">
-				<view class="hint">
-					<div style="margin-top: 10px; margin-bottom: 10px;">
-					</div>登录代表您已阅读并接受
-					<text class="link" @click="navigateTo(`/pages/common/agreement/index`)">blog用户协议、隐私政策、知识共享协议。</text>
+					<view class="password" @click="toRegister()">{{translations.注册}}</view>
+					<view class="issue" @click="forget()">{{translations.忘记密码}}</view>
 				</view>
 			</view>
 		</view>
@@ -31,6 +24,8 @@
 </template>
 
 <script>
+	import Chinese from '@/languages/zh-CN'
+	import English from '@/languages/en-US'
 	export default {
 		data() {
 			return {
@@ -57,7 +52,8 @@
 						//pattern:正则表达式的规则
 						/* {pattern: /^(?=.*\S).+$/, message: '请输入密码!', trigger: 'blur'} */
 					]
-				}
+				},
+				translations: this.language === "en-US" ? English : Chinese
 			}
 		},
 		computed: {
@@ -74,6 +70,9 @@
 			this.$refs.validateFormRef.setRules(this.rules);
 		},
 		onLoad() {
+			uni.setNavigationBarTitle({
+				title: this.translations.登录
+			})
 			if (this.darkTheme) {
 				uni.setNavigationBarColor({
 					frontColor: '#ffffff', // 这是文字颜色，设置为白色
@@ -88,7 +87,6 @@
 		},
 		onShow() {},
 		methods: {
-
 			toRegister: function() {
 				uni.navigateTo({
 					url: "/pages/user/register/register"

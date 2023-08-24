@@ -18,7 +18,7 @@
 					<u-subsection :list="list1" :current="current" @change="handleChange"></u-subsection>
 				</view>
 				<view>
-					<u-divider style="margin-top: 4%;">使用选择器可以更换浏览内容</u-divider>
+					<u-divider style="margin-top: 4%;">{{translations.使用选择器可以更换浏览内容}}</u-divider>
 					<view v-for="(item, index) in activeList" :key="item.id">
 						<u-swipe-action :show="item.show" :index="index" @click="click(index)" @open="open(index)"
 							:options="options">
@@ -29,7 +29,7 @@
 								</view>
 							</view>
 							<view slot="action">
-								<text @click="deleteItem(index)" class="delete-text">删除</text>
+								<text @click="deleteItem(index)" class="delete-text">{{translations.删除}}</text>
 							</view>
 						</u-swipe-action>
 					</view>
@@ -40,6 +40,8 @@
 
 </template>
 <script>
+	import Chinese from '@/languages/zh-CN'
+	import English from '@/languages/en-US'
 	export default {
 		data() {
 			return {
@@ -80,7 +82,8 @@
 					style: {
 						backgroundColor: '#dd524d'
 					}
-				}]
+				}],
+				translations: this.language === "en-US" ? English : Chinese
 			};
 		},
 		async created() {
@@ -149,6 +152,9 @@
 			}
 		},
 		onLoad() {
+			uni.setNavigationBarTitle({
+				title: this.translations.我的主页
+			})
 			if (this.darkTheme) {
 				uni.setNavigationBarColor({
 					frontColor: '#ffffff', // 这是文字颜色，设置为白色

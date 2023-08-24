@@ -1,7 +1,7 @@
 <template>
 	<view class="global-view" :class="{ 'dark-theme': darkTheme }">
 		<view class="container">
-			<view style="margin: 20rpx auto;">分类列表</view>
+			<view style="margin: 20rpx auto;">{{translations.分类列表}}</view>
 			<view class="categories-menu">
 				<ul>
 					<li v-for="(Categories,index) in Categorieslist" :item="Categories" :index="index" :key="Categories.cg_id" @click="toDetail(Categories.cg_id)">
@@ -16,13 +16,40 @@
 </template>
 
 <script>
+	import Chinese from '@/languages/zh-CN'
+	import English from '@/languages/en-US'
 	export default {
 		data() {
 			return {
-				Categorieslist:[]
+				Categorieslist:[],
+				translations: this.language === "en-US" ? English : Chinese
 			}
 		},
-		onLoad(){//在页面加载的时候就会执行这个函数
+		onLoad(){
+			uni.setNavigationBarTitle({
+				title: this.translations.分类
+			});
+			uni.setTabBarItem({
+				index: 0,
+				text: this.translations.首页
+			});
+			uni.setTabBarItem({
+				index: 1,
+				text: this.translations.分类
+			});
+			uni.setTabBarItem({
+				index: 2,
+				text: this.translations.投稿
+			});
+			uni.setTabBarItem({
+				index: 3,
+				text: this.translations.动态
+			});
+			uni.setTabBarItem({
+				index: 4,
+				text: this.translations.我的
+			});
+			//在页面加载的时候就会执行这个函数
 			//发送请求去查询电影列表数据
 			//uni.request({}) 这个属于uniapp中的请求方式
 			//采用uview中的请求方式

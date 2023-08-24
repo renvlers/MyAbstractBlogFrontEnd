@@ -3,14 +3,14 @@
 		<view class="container">
 			<view class="wrap" :class="{ 'dark-theme': darkTheme }">
 				<view class="content">
-					<view class="title">验证邮箱</view>
-					<view class="text">请完成邮箱验证进行重置密码</view>
+					<view class="title">{{translations.验证邮箱}}</view>
+					<view class="text">{{translations.请完成邮箱验证进行重置密码}}</view>
 					<u-form ref="validateFormRef" :model="validateForm.user">
-						<u-form-item label="邮箱" prop="mail" required>
+						<u-form-item :label="translations.邮箱" prop="mail" required>
 							<u-input class="input-box" type="mail" v-model="validateForm.user.mail" placeholder="" />
 						</u-form-item>
 					</u-form>
-					<u-button type="primary" style="margin: 5rpx;" @click="sendRequest">发送验证码</u-button>
+					<u-button type="primary" style="margin: 5rpx;" @click="sendRequest">{{translations.发送验证码}}</u-button>
 				</view>
 			</view>
 		</view>
@@ -19,6 +19,8 @@
 </template>
 
 <script>
+	import Chinese from '@/languages/zh-CN'
+	import English from '@/languages/en-US'
 	export default {
 		data() {
 			return {
@@ -27,9 +29,13 @@
 						mail: '',
 					},
 				},
+				translations: this.language === "en-US" ? English : Chinese
 			};
 		},
 		onLoad() {
+			uni.setNavigationBarTitle({
+				title: this.translations.忘记密码
+			})
 			if (this.darkTheme) {
 				uni.setNavigationBarColor({
 					frontColor: '#ffffff', // 这是文字颜色，设置为白色
@@ -57,11 +63,11 @@
 							url: '/pages/verify/verify',
 						});
 					} else if (response.status === 404) {
-						this.$u.toast('网络错误，请稍后再试');
+						this.$u.toast(this.translations.网络错误);
 					} else if (response.status === 500) {
-						this.$u.toast('服务器错误，无法进行页面跳转');
+						this.$u.toast(this.translations.服务器错误);
 					} else {
-						this.$u.toast('未知错误');
+						this.$u.toast(this.translations.未知错误);
 					}
 
 				} catch (error) {
