@@ -312,5 +312,6 @@ export default {
 	搜索结果: "Search Result，",
 	修改语言: "Change Language",
 	个人信息修改: "Change Profiles",
-	修改字体: "Change Font"
+	修改正文字体: "Change Article Font",
+	默认字体: "Default Font"
 };

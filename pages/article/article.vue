@@ -7,7 +7,7 @@
 			<view class="title-author-and-time">
 				<h1 class="article-details-title">{{article.title}}</h1>
 				<view class="author-and-time">
-					<span class="icon-with-text">
+					<span class="icon-with-text" @click="toProfile(article.author)">
 						<image src="/static/svg/author.svg" alt="" class="small-icon">
 							{{article.author}}
 					</span>
@@ -34,7 +34,7 @@
 			</view>
 			<hr class="article-horizonal-line">
 			<view class="article-content">
-				<zero-markdown-view :themeColor="darkTheme? 'white' : 'black'" :markdown="article.content">
+				<zero-markdown-view :style="articleFont" :themeColor="darkTheme? 'white' : 'black'" :markdown="article.content">
 
 				</zero-markdown-view>
 			</view>
@@ -112,6 +112,9 @@
 	export default {
 		data() {
 			return {
+				articleFont: {
+					fontFamily: uni.getStorageSync("font")
+				},
 				currComment: null,
 				isMine: false,
 				isLiked: false,
@@ -158,6 +161,17 @@
 			}
 		},
 		methods: {
+			toProfile(user) {
+				if(uni.getStorageSync("user").u_id === this.article.authorid){
+					uni.navigateTo({
+						url: "/pages/myhome/myhome"
+					});
+				} else {
+					uni.navigateTo({
+						url: "/pages/otherhome/otherhome"
+					});
+				}
+			},
 			loadArticle(para) {
 				uni.request({
 					url: `/api/article/getarticle/${para.aid}`,

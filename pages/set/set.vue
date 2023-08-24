@@ -6,12 +6,14 @@
 					<li @click="change_password()">{{translations.修改密码}}</li>
 					<li @click="selectTheme()">{{translations.修改主题}}</li>
 					<li @click="selectLanguage()">{{translations.修改语言}}</li>
+					<li @click="selectFont()">{{translations.修改正文字体}}</li>
 				</ul>
 			</view>
 
 		</view>
 		<transition name="bgcolor" mode='out-in'>
-			<view v-if="showThemeMenu | showLanguageMenu" class="fixed-background" @click="closeMenu()">
+			<view v-if="showThemeMenu || showLanguageMenu || showFontMenu" class="fixed-background"
+				@click="closeMenu()">
 			</view>
 		</transition>
 		<transition name="menu-slide-up">
@@ -29,6 +31,16 @@
 					<li @click="closeMenu()">取消</li>
 				</ul>
 			</view>
+			<view v-if="showFontMenu" ref="menu" class="menu">
+				<ul>
+					<li @click="changeFont('')">{{translations.默认字体}}</li>
+					<li @click="changeFont('宋体')" style="font-family: '宋体';">宋体</li>
+					<li @click="changeFont('黑体')" style="font-family: '黑体';">黑体</li>
+					<li @click="changeFont('楷体')" style="font-family: '楷体';">楷体</li>
+					<li @click="changeFont('仿宋')" style="font-family: '仿宋';">仿宋</li>
+					<li @click="closeMenu()">取消</li>
+				</ul>
+			</view>
 		</transition>
 	</view>
 </template>
@@ -41,6 +53,7 @@
 			return {
 				showThemeMenu: false,
 				showLanguageMenu: false,
+				showFontMenu: false,
 				translations: this.language === "en-US" ? English : Chinese
 			}
 		},
@@ -56,9 +69,29 @@
 			closeMenu() {
 				this.showThemeMenu = false;
 				this.showLanguageMenu = false;
+				this.showFontMenu = false;
 			},
 			selectLanguage() {
 				this.showLanguageMenu = true;
+			},
+			selectFont() {
+				this.showFontMenu = true;
+			},
+			changeFont(font) {
+				if (font !== '')
+					uni.setStorageSync("font", font);
+				else
+					uni.removeStorageSync("font");
+				this.closeMenu();
+				if (this.language == "en-US") {
+					uni.showToast({
+						title: "Changed Successfully"
+					});
+				} else {
+					uni.showToast({
+						title: "修改成功"
+					});
+				}
 			},
 			changeTheme(theme) {
 				if (theme === "dark") {
