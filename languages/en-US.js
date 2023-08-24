@@ -308,4 +308,9 @@ export default {
 	修改成功: "Changed Successfully",
 	请刷新页面以生效: "Please Refresh the Page to Take Effect",
 	分类详情: "Category Details",
+	TA的主页: "His/Her Homepage",
+	搜索结果: "Search Result，",
+	修改语言: "Change Language",
+	个人信息修改: "Change Profiles",
+	修改字体: "Change Font"
 };

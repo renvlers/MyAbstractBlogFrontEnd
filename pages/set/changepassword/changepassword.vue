@@ -3,17 +3,17 @@
 		<view class="container">
 			<view style="padding: 15px;" :class="{ 'dark-theme': darkTheme }">
 				<u-form ref="validateFormRef" :model="user" :label-width="150">
-					<u-form-item label="原密码" prop="inputPassword" required>
+					<u-form-item :label="translations.原密码" prop="inputPassword" required>
 						<u-input class="input-box" v-model="user.inputPassword" placeholder="" />
 					</u-form-item>
-					<u-form-item label="新密码" prop="newPassword" required>
+					<u-form-item :label="translations.新密码" prop="newPassword" required>
 						<u-input class="input-box" type="password" v-model="user.newPassword" placeholder="" />
 					</u-form-item>
-					<u-form-item label="确认新密码" prop="confirmNewPassword" required>
+					<u-form-item :label="translations.确认新密码" prop="confirmNewPassword" required>
 						<u-input class="input-box" type="password" v-model="user.confirmNewPassword" placeholder="" />
 					</u-form-item>
 				</u-form>
-				<button class="green-button" @click="submit()">修改</button>
+				<button class="green-button" @click="submit()">{{translations.修改}}</button>
 			</view>
 		</view>
 	</view>
@@ -21,9 +21,12 @@
 </template>
 
 <script>
+	import Chinese from '@/languages/zh-CN'
+	import English from '@/languages/en-US'
 	export default {
 		data() {
 			return {
+				translations: this.language === "en-US" ? English : Chinese,
 				user: {
 					inputPassword: '',
 					u_id: 0,
@@ -63,6 +66,9 @@
 			this.$refs.validateFormRef.setRules(this.rules);
 		},
 		onLoad() {
+			uni.setNavigationBarTitle({
+				title: this.translations.修改密码
+			});
 			if (this.darkTheme) {
 				uni.setNavigationBarColor({
 					frontColor: '#ffffff', // 这是文字颜色，设置为白色

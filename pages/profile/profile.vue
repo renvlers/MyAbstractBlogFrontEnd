@@ -21,20 +21,20 @@
 				<u-cell-group style="border-radius: 10rpx;">
 					<u-cell-item icon="edit-pen" :arrow="false">
 						<view class="u-font-14 u-margin-top-15 u-margin-left-40 u-tips-color">
-							<u-input v-model="user.u_signature" :customStyle="inputStyle" placeholder="编辑个签,展示我的独特态度"
+							<u-input v-model="user.u_signature" :customStyle="inputStyle" :placeholder="`${translations.编辑个签}, ${translations.展示我的独特态度}`"
 								@click="topersonality()">
 							</u-input>
 						</view>
 					</u-cell-item>
-					<u-cell-item icon="home" title="我的主页" @click="myCollection()"></u-cell-item>
-					<u-cell-item icon="heart" title="我的关注" @click="myFollowing()"></u-cell-item>
-					<u-cell-item icon="account" title="我的粉丝" @click="myFans()"></u-cell-item>
-					<u-cell-item icon="more-dot-fill" title="关于" @click="about()"></u-cell-item>
-					<u-cell-item icon="setting" title="设置" @click="set"></u-cell-item>
+					<u-cell-item icon="home" :title="translations.我的主页" @click="myCollection()"></u-cell-item>
+					<u-cell-item icon="heart" :title="translations.我的关注" @click="myFollowing()"></u-cell-item>
+					<u-cell-item icon="account" :title="translations.我的粉丝" @click="myFans()"></u-cell-item>
+					<u-cell-item icon="more-dot-fill" :title="translations.关于" @click="about()"></u-cell-item>
+					<u-cell-item icon="setting" :title="translations.设置" @click="set"></u-cell-item>
 				</u-cell-group>
 			</view>
 			<view class="container">
-				<u-button class="exit" type="error" @click="exit()">退出</u-button>
+				<u-button class="exit" type="error" @click="exit()">{{translations.退出}}</u-button>
 			</view>
 		</view>
 		<!--未登陆时内容-->
@@ -67,6 +67,8 @@
 </template>
 
 <script>
+	import Chinese from '@/languages/zh-CN'
+	import English from '@/languages/en-US'
 	export default {
 		data() {
 			return {
@@ -75,7 +77,33 @@
 				inputStyle: {
 					fontSize: '16px'
 				},
+				translations: this.language === "en-US" ? English : Chinese
 			}
+		},
+		onLoad(){
+			uni.setNavigationBarTitle({
+				title: this.translations.我的
+			});
+			uni.setTabBarItem({
+				index: 0,
+				text: this.translations.首页
+			});
+			uni.setTabBarItem({
+				index: 1,
+				text: this.translations.分类
+			});
+			uni.setTabBarItem({
+				index: 2,
+				text: this.translations.投稿
+			});
+			uni.setTabBarItem({
+				index: 3,
+				text: this.translations.动态
+			});
+			uni.setTabBarItem({
+				index: 4,
+				text: this.translations.我的
+			});
 		},
 		onShow() { //在页面显示的时候调用这个周期函数
 			//1.从storage中读取用户信息

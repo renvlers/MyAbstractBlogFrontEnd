@@ -4,18 +4,18 @@
 			<view class="wrap" :class="{ 'dark-theme': darkTheme }">
 				<view class="top"></view>
 				<view class="content">
-					<view class="title">输入验证码</view>
-					<view class="text">请在下方输入您收到的验证码</view>
+					<view class="title">{{translations.输入验证码}}</view>
+					<view class="text">{{translations.请在下方输入您收到的验证码}}</view>
 					<u-form ref="validateFormRef" :model="validateForm.user">
-						<u-form-item label="邮箱" prop="mail" required>
+						<u-form-item :label="translations.邮箱" prop="mail" required>
 							<u-input class="input-box" type="mail" v-model="validateForm.user.mail" placeholder="" />
 						</u-form-item>
-						<u-form-item label="验证码" style="font-size: 0.9em;" prop="verificationCode" required>
+						<u-form-item :label="translations.验证码" style="font-size: 0.9em;" prop="verificationCode" required>
 							<u-input class="input-box" v-model="validateForm.user.verificationCode" placeholder="" />
 						</u-form-item>
 					</u-form>
 					<u-button type="primary" style="margin: 5rpx;" @click="handleVerify">
-						验证
+						{{translations.验证}}
 					</u-button>
 				</view>
 			</view>
@@ -25,9 +25,12 @@
 </template>
 
 <script>
+	import Chinese from '@/languages/zh-CN'
+	import English from '@/languages/en-US'
 	export default {
 		data() {
 			return {
+				translations: this.language === "en-US" ? English : Chinese,
 				validateForm: {
 					user: {
 						mail: '',
@@ -37,6 +40,9 @@
 			};
 		},
 		onLoad() {
+			uni.setNavigationBarTitle({
+				title: this.translations.验证邮箱
+			});
 			if (this.darkTheme) {
 				uni.setNavigationBarColor({
 					frontColor: '#ffffff', // 这是文字颜色，设置为白色

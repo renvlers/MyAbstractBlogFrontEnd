@@ -1,34 +1,37 @@
 <template>
 	<view class="global-view">
 		<view class="container">
-			<view class="title">注册BLOG</view>
+			<view class="title">{{translations.注册}} BLOG</view>
 			<u-form ref="validateFormRef" :model="user" :label-width="150">
-			<u-form-item label="登录昵称" prop="u_nickname" required>
+			<u-form-item :label="translations.登录昵称" prop="u_nickname" required>
 				<u-input class="input-box" v-model="user.u_nickname" placeholder="" />
 			</u-form-item>
-			<u-form-item label="邮箱" prop="u_email" required>
+			<u-form-item :label="translations.邮箱" prop="u_email" required>
 				<u-input class="input-box" v-model="user.u_email" placeholder="" />
 			</u-form-item>
-			<button class="green-button" @click="getCode()">获取验证码</button>
-			<u-form-item label="验证码" prop="u_code" required>
+			<button class="green-button" @click="getCode()">{{translations.获取验证码}}</button>
+			<u-form-item :label="translations.验证码" prop="u_code" required>
 				<u-input class="input-box" type="" v-model="user.u_code" placeholder="" />
 			</u-form-item>
-			<u-form-item label="登录密码" prop="u_password" required>
+			<u-form-item :label="translations.登录密码" prop="u_password" required>
 				<u-input class="input-box" type="password" v-model="user.u_password" placeholder="" />
 			</u-form-item>
-			<u-form-item label="确认密码" prop="u_confirPassword" required>
+			<u-form-item :label="translations.确认密码" prop="u_confirPassword" required>
 				<u-input class="input-box" type="password" v-model="user.u_confirPassword" placeholder="" />
 			</u-form-item>
 		</u-form>
-		<button class="green-button" @click="submit()">提交</button>
+		<button class="green-button" @click="submit()">{{translations.提交}}</button>
 		</view>
 	</view>
 </template>
 
 <script>
+	import Chinese from '@/languages/zh-CN'
+	import English from '@/languages/en-US'
 	export default {
 		data() {
 			return {
+				translations: this.language === "en-US" ? English : Chinese,
 				user: {
 					u_avatar_url: '',
 					u_signature: '',
@@ -73,6 +76,11 @@
 					}]
 				}
 			}
+		},
+		onLoad(){
+			uni.setNavigationBarTitle({
+				title: this.translations.注册
+			});
 		},
 		onReady() {
 			this.$refs.validateFormRef.setRules(this.rules);

@@ -13,16 +13,19 @@
 			</view>
 		</view>
 		<view v-else class="container">
-			<span>未搜索到任何结果</span>
+			<span>{{translations.未搜索到任何结果}}</span>
 		</view>
 	</view>
 </template>
 
 <script>
+	import Chinese from '@/languages/zh-CN'
+	import English from '@/languages/en-US'
 	export default {
 		data() {
 			return {
-				articles: []
+				articles: [],
+				translations: this.language === "en-US" ? English : Chinese
 			}
 		},
 		methods: {
@@ -66,6 +69,9 @@
 			}
 		},
 		onLoad(para){
+			uni.setNavigationBarTitle({
+				title: this.translations.搜索结果
+			});
 			if (this.darkTheme) {
 				uni.setNavigationBarColor({
 					frontColor: '#ffffff', // 这是文字颜色，设置为白色

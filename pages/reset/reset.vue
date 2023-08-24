@@ -4,22 +4,22 @@
 			<view class="wrap" :class="{ 'dark-theme': darkTheme }">
 				<view class="top"></view>
 				<view class="content">
-					<view class="title">重置密码</view>
-					<view class="text">请在下面输入信息完成重置</view>
+					<view class="title">{{translations.重置密码}}</view>
+					<view class="text">{{translations.请在下面输入信息完成重置}}</view>
 					<u-form ref="validateFormRef" :model="validateForm.user">
-						<u-form-item label="邮箱" prop="mail" required>
+						<u-form-item :label="translations.邮箱" prop="mail" required>
 							<u-input class="input-box" type="mail" v-model="validateForm.user.mail" placeholder="" />
 						</u-form-item>
-						<u-form-item label="新密码" style="font-size: 0.9em;" prop="password" required>
+						<u-form-item :label="translations.新密码" style="font-size: 0.9em;" prop="password" required>
 							<u-input class="input-box" type="password" v-model="validateForm.user.password"
 								placeholder="" />
 						</u-form-item>
-						<u-form-item label="确认密码" style="font-size: 0.7em;" prop="confirmPassword" required>
+						<u-form-item :label="translations.确认密码" style="font-size: 0.7em;" prop="confirmPassword" required>
 							<u-input class="input-box" type="password" v-model="confirmPassword" placeholder="" />
 						</u-form-item>
 					</u-form>
 					<!-- 修改点：添加点击事件处理函数 -->
-					<u-button type="success" style="margin: 5rpx;" @click="handleReset">确认重置</u-button>
+					<u-button type="success" style="margin: 5rpx;" @click="handleReset">{{translations.确认重置}}</u-button>
 				</view>
 			</view>
 		</view>
@@ -28,6 +28,8 @@
 </template>
 
 <script>
+	import Chinese from '@/languages/zh-CN'
+	import English from '@/languages/en-US'
 	export default {
 		data() {
 			return {
@@ -37,10 +39,14 @@
 						mail: '',
 						password: ''
 					}
-				}
+				},
+				translations: this.language === "en-US" ? English : Chinese
 			};
 		},
 		onLoad() {
+			uni.setNavigationBarTitle({
+				title: this.translations.重置密码
+			});
 			if (this.darkTheme) {
 				uni.setNavigationBarColor({
 					frontColor: '#ffffff', // 这是文字颜色，设置为白色

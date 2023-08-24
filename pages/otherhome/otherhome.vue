@@ -18,7 +18,7 @@
 					<u-subsection :list="list1" :current="current" @change="handleChange"></u-subsection>
 				</view>
 				<view>
-					<u-divider style="margin-top: 4%;">使用选择器可以更换浏览内容</u-divider>
+					<u-divider style="margin-top: 4%;">{{translations.使用选择器可以更换浏览内容}}</u-divider>
 					<view v-for="(item, index) in activeList" :key="item.id">
 						<view class="item u-border-bottom" @click="redirectToDetail(item.id)">
 							<image mode="aspectFill" :src="item.cover_url" />
@@ -35,6 +35,8 @@
 </template>
 
 <script>
+	import Chinese from '@/languages/zh-CN'
+	import English from '@/languages/en-US'
 	export default {
 		data() {
 			return {
@@ -56,6 +58,7 @@
 				current: 0,
 				selectedIndex: 0,
 				activeList: [],
+				translations: this.language === "en-US" ? English : Chinese
 			};
 		},
 		async created() {
@@ -114,6 +117,9 @@
 			}
 		},
 		onLoad() {
+			uni.setNavigationBarTitle({
+				title: this.translations.TA的主页
+			});
 			if (this.darkTheme) {
 				uni.setNavigationBarColor({
 					frontColor: '#ffffff', // 这是文字颜色，设置为白色

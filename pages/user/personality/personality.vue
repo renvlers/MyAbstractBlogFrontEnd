@@ -2,18 +2,21 @@
 <template>
 	<view class="" :class="{ 'dark-theme': darkTheme }">
 		<u-form ref="validateFormRef" :model="user" :label-width="150">
-			<u-form-item label="个性签名:" prop="personality" placeholder="编辑你的个性签名">
-				<u-input v-model="user.u_signature" />
+			<u-form-item :label="translations.个性签名" prop="personality">
+				<u-input v-model="user.u_signature" :placeholder="translations.编辑你的个性签名"/>
 			</u-form-item>
 		</u-form>
-		<u-button @click="submit()">保存</u-button>
+		<u-button @click="submit()">{{translations.保存}}</u-button>
 	</view>
 </template>
 
 <script>
+	import Chinese from '@/languages/zh-CN'
+	import English from '@/languages/en-US'
 	export default {
 		data() {
 			return {
+				translations: this.language === "en-US" ? English : Chinese,
 				user: {
 					u_nickname: '',
 					u_password: '',
@@ -41,6 +44,9 @@
 			console.log(this.user)
 		},
 		onLoad(){
+			uni.setNavigationBarTitle({
+				title: this.translations.个性签名
+			});
 			if (this.darkTheme) {
 				uni.setNavigationBarColor({
 					frontColor: '#ffffff', // 这是文字颜色，设置为白色

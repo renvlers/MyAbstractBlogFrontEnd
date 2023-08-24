@@ -5,35 +5,38 @@
 				<image style="width: 100px; height: 100px" class="u-avatar-demo" :src="avatar" mode="aspectFill">
 				</image>
 			</view>
-			<u-button @tap="chooseAvatar">更换头像</u-button>
-			<u-form-item label="昵称">
+			<u-button @tap="chooseAvatar">{{translations.更换头像}}</u-button>
+			<u-form-item :label="translations.昵称">
 				<u-input border="border" v-model="user.u_nickname" />
 			</u-form-item>
-			<u-form-item label="账号">
+			<u-form-item :label="translations.账号">
 				<u-input border="border" v-model="user.u_id" disabled />
 			</u-form-item>
-			<u-form-item label="性别">
+			<u-form-item :label="translations.性别">
 				<u-input v-model="user.u_gender" :type="type" :border="border" @click="show = true" />
 				<u-action-sheet :list="actionSheetList" v-model="show" @click="actionSheetCallback"></u-action-sheet>
 			</u-form-item>
-			<u-form-item label="生日">
+			<u-form-item :label="translations.生日">
 				<u-input border="border" v-model="user.u_birth_date" />
 				<u-calendar v-model="show_calendar" :mode="mode" @change="change"></u-calendar>
-				<u-button @click="choose()">选择</u-button>
+				<u-button @click="choose()">{{translations.选择}}</u-button>
 			</u-form-item>
-			<u-form-item label="邮箱">
+			<u-form-item :label="translations.邮箱">
 				<u-input border="border" v-model="user.u_email" disabled />
 			</u-form-item>
-			<button class="save" @click="save()" type="primary">保存</button>
+			<button class="save" @click="save()" type="primary">{{translations.保存}}</button>
 		</view>
 	</view>
 
 </template>
 
 <script>
+	import Chinese from '@/languages/zh-CN'
+	import English from '@/languages/en-US'
 	export default {
 		data() {
 			return {
+				translations: this.language === "en-US" ? English : Chinese,
 				avatar: 'https://cdn.uviewui.com/uview/common/logo.png',
 				user: {
 					u_id: 0,
@@ -91,6 +94,9 @@
 			}
 		},
 		onLoad(){
+			uni.setNavigationBarTitle({
+				title: this.translations.个人信息修改
+			});
 			if (this.darkTheme) {
 				uni.setNavigationBarColor({
 					frontColor: '#ffffff', // 这是文字颜色，设置为白色

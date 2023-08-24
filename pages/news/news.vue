@@ -1,6 +1,6 @@
 <template>
 	<view class="global-view" :class="{ 'dark-theme': darkTheme }">
-		<view class="container"><u-button class="green-button" style="background-color: #37d11c; color: white"@click="newDynamics()">发表动态</u-button></view>
+		<view class="container"><u-button class="green-button" style="background-color: #37d11c; color: white"@click="newDynamics()">{{translations.发表动态}}</u-button></view>
 		<view class="container"><u-waterfall v-model="flowList" ref="uWaterfall">
 				<template v-slot:left="{leftList}">
 					<view class="demo-warter" v-for="(item, index) in leftList" :key="index"
@@ -54,7 +54,8 @@
 				loadStatus: 'loadmore',
 				scrollTop: 0,
 				flowList: [],
-				list: []
+				list: [],
+				translations: this.language === "en-US" ? English : Chinese
 			}
 		},
 		onPageScroll(e) {
