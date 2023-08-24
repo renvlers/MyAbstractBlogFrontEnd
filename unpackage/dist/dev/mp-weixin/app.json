@@ -1,0 +1,58 @@
+{
+  "pages": [
+    "pages/home/home",
+    "pages/categories/categories",
+    "pages/dynamics/dynamics",
+    "pages/profile/profile",
+    "pages/new-article/new-article",
+    "pages/article/article"
+  ],
+  "subPackages": [],
+  "window": {
+    "navigationBarTextStyle": "black",
+    "navigationBarTitleText": "uni-app",
+    "navigationBarBackgroundColor": "#F8F8F8",
+    "backgroundColor": "#F8F8F8"
+  },
+  "tabBar": {
+    "color": "#aaaaaa",
+    "selectedColor": "#37d11c",
+    "fontSize": "11px",
+    "backgroundColor": "#fcfcfc",
+    "borderStyle": "lightgray",
+    "list": [
+      {
+        "pagePath": "pages/home/home",
+        "iconPath": "static/tabbar/home.svg",
+        "selectedIconPath": "static/tabbar/homeSelected.svg",
+        "text": "首页"
+      },
+      {
+        "pagePath": "pages/categories/categories",
+        "iconPath": "static/tabbar/categories.svg",
+        "selectedIconPath": "static/tabbar/categoriesSelected.svg",
+        "text": "分类"
+      },
+      {
+        "pagePath": "pages/new-article/new-article",
+        "iconPath": "static/tabbar/new-article.svg",
+        "selectedIconPath": "static/tabbar/new-articleSelected.svg",
+        "backgroundColor": "#37d11c",
+        "text": "投稿"
+      },
+      {
+        "pagePath": "pages/dynamics/dynamics",
+        "iconPath": "static/tabbar/dynamics.svg",
+        "selectedIconPath": "static/tabbar/dynamicsSelected.svg",
+        "text": "动态"
+      },
+      {
+        "pagePath": "pages/profile/profile",
+        "iconPath": "static/tabbar/profile.svg",
+        "selectedIconPath": "static/tabbar/profileSelected.svg",
+        "text": "我的"
+      }
+    ]
+  },
+  "usingComponents": {}
+}

@@ -1,0 +1,282 @@
+{
+	"easycom": {
+		// 下载安装的方式需要前面的"@/"，npm安装的方式无需"@/"
+		// 下载安装方式
+		"^u-(.*)": "@/uview-ui/components/u-$1/u-$1.vue"
+		// npm安装方式
+		// "^u-(.*)": "uview-ui/components/u-$1/u-$1.vue"
+	},
+	"pages": [ //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
+		{
+			"path": "pages/home/home",
+			"style": {
+				"navigationBarTitleText": "首页",
+				"enablePullDownRefresh": true,
+				"backgroundColor": "#dedede"
+			}
+
+		}, {
+			"path": "pages/kinds/kinds",
+			"style": {
+				"navigationBarTitleText": "分类",
+				"enablePullDownRefresh": false
+			}
+
+		}, {
+			"path": "pages/news/news",
+			"style": {
+				"navigationBarTitleText": "动态",
+				"enablePullDownRefresh": false
+			}
+
+		}, {
+			"path": "pages/profile/profile",
+			"style": {
+				"navigationBarTitleText": "我的",
+				"enablePullDownRefresh": false
+			}
+
+		}, {
+			"path": "pages/new-article/new-article",
+			"style": {
+				"navigationBarTitleText": "投稿",
+				"enablePullDownRefresh": false
+			}
+
+		}, {
+			"path": "pages/article/article",
+			"style": {
+				"navigationBarTitleText": "文章详情",
+				"enablePullDownRefresh": false
+			}
+
+		}, {
+			"path": "pages/new-dynamics/new-dynamics",
+			"style": {
+				"navigationBarTitleText": "新动态",
+				"enablePullDownRefresh": false
+			}
+
+		},
+		{
+			"path": "pages/login/login",
+			"style": {
+				"navigationBarTitleText": "登录",
+				"enablePullDownRefresh": false
+			}
+
+		}
+	    ,{
+            "path" : "pages/search/search",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "搜索结果",
+                "enablePullDownRefresh": false
+            }
+            
+        },
+		{
+		    "path" : "pages/forget/forget",
+		    "style" :                                                                                    
+		    {
+		        "navigationBarTitleText": "找回密码",
+		        "enablePullDownRefresh": false
+		    }
+		    
+		},
+		{
+		    "path" : "pages/reset/reset",
+		    "style" :                                                                                    
+		    {
+		        "navigationBarTitleText": "重置密码",
+		        "enablePullDownRefresh": false
+		    }
+		    
+		},
+		{
+		    "path" : "pages/verify/verify",
+		    "style" :                                                                                    
+		    {
+		        "navigationBarTitleText": "验证邮箱",
+		        "enablePullDownRefresh": false
+		    }
+		    
+		},
+		{
+		    "path" : "pages/user/mySelf/mySelf",
+		    "style" :                                                                                    
+		    {
+		        "navigationBarTitleText": "个人信息修改",
+		        "enablePullDownRefresh": false
+		    }
+		    
+		},
+		{
+		    "path" : "pages/user/personality/personality",
+		    "style" :                                                                                    
+		    {
+		        "navigationBarTitleText": "个性签名",
+		        "enablePullDownRefresh": false
+		    }
+		    
+		},
+		{
+		    "path" : "pages/user/register/register",
+		    "style" :                                                                                    
+		    {
+		        "navigationBarTitleText": "注册",
+		        "enablePullDownRefresh": false
+		    }
+		    
+		},
+		{
+		    "path" : "pages/set/set",
+		    "style" :                                                                                    
+		    {
+		        "navigationBarTitleText": "设置",
+		        "enablePullDownRefresh": false
+		    }
+		    
+		},
+		{
+		    "path" : "pages/set/changepassword/changepassword",
+		    "style" :                                                                                    
+		    {
+		        "navigationBarTitleText": "修改密码",
+		        "enablePullDownRefresh": false
+		    }
+		    
+		},
+		{
+		    "path" : "pages/card/card",
+		    "style" :                                                                                    
+		    {
+		        "navigationBarTitleText": "修改密码",
+		        "enablePullDownRefresh": false
+		    }
+		    
+		},
+		{
+		    "path" : "pages/article_detail/article_detail",
+		    "style" :                                                                                    
+		    {
+		        "navigationBarTitleText": "分类详情",
+		        "enablePullDownRefresh": false
+		    }
+		    
+		},
+		{
+		    "path" : "pages/myfans/myfans",
+		    "style" :                                                                                    
+		    {
+		        "navigationBarTitleText": "我的粉丝",
+		        "enablePullDownRefresh": false
+		    }
+		    
+		},
+		{
+		    "path" : "pages/myfollow/myfollow",
+		    "style" :                                                                                    
+		    {
+		        "navigationBarTitleText": "我的关注",
+		        "enablePullDownRefresh": false
+		    }
+		    
+		},
+		{
+		    "path" : "pages/myhome/myhome",
+		    "style" :                                                                                    
+		    {
+		        "navigationBarTitleText": "我的主页",
+		        "enablePullDownRefresh": false
+		    }
+		    
+		},
+		{
+		    "path" : "pages/otherhome/otherhome",
+		    "style" :                                                                                    
+		    {
+		        "navigationBarTitleText": "TA的主页",
+		        "enablePullDownRefresh": false
+		    }
+		    
+		},
+		{
+		    "path" : "pages/user/register/register_success/register_success",
+		    "style" :                                                                                    
+		    {
+		        "navigationBarTitleText": "注册成功",
+		        "enablePullDownRefresh": false
+		    }
+		    
+		},
+		{
+		    "path" : "pages/about/about",
+		    "style" :                                                                                    
+		    {
+		        "navigationBarTitleText": "关于",
+		        "enablePullDownRefresh": false
+		    }
+		    
+		}
+		
+		
+        ,{
+            "path" : "pages/newdetails/newdetails",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "",
+                "enablePullDownRefresh": false
+            }
+            
+        }
+    ],
+	"tabBar": {
+		"color": "#aaaaaa",
+		"selectedColor": "#37d11c",
+		"fontSize": "11px",
+		"backgroundColor": "#fcfcfc",
+		"borderStyle": "lightgray",
+		"list": [{
+				"pagePath": "pages/home/home",
+				"iconPath": "/static/tabbar/home.svg",
+				"selectedIconPath": "/static/tabbar/homeSelected.svg",
+				"text": "首页"
+			},
+			{
+				"pagePath": "pages/kinds/kinds",
+				"iconPath": "/static/tabbar/categories.svg",
+				"selectedIconPath": "/static/tabbar/categoriesSelected.svg",
+				"text": "分类"
+			},
+			{
+				"pagePath": "pages/new-article/new-article",
+				"iconPath": "/static/tabbar/new-article.svg",
+				"selectedIconPath": "/static/tabbar/new-articleSelected.svg",
+				"backgroundColor": "#37d11c",
+				"text": "投稿"
+			},
+			{
+				"pagePath": "pages/news/news",
+				"iconPath": "/static/tabbar/dynamics.svg",
+				"selectedIconPath": "/static/tabbar/dynamicsSelected.svg",
+				"text": "动态"
+			},
+			{
+				"pagePath": "pages/profile/profile",
+				"iconPath": "/static/tabbar/profile.svg",
+				"selectedIconPath": "/static/tabbar/profileSelected.svg",
+				"text": "我的"
+			}
+		]
+	},
+	"globalStyle": {
+		"navigationBarTextStyle": "black",
+		"navigationBarTitleText": "uni-app",
+		"navigationBarBackgroundColor": "#F8F8F8",
+		"backgroundColor": "#F8F8F8"
+	},
+	"uniIdRouter": {}
+
+
+}

@@ -1,0 +1,84 @@
+{
+	"id": "bctos-rich-editor",
+	"displayName": "支持uniCloud云存储并且带视频本地上传的富文本编辑器",
+	"version": "1.0.0",
+	"description": "在tinymce最新的5版本基础开发，扩展实现图片和视频上传到uniCloud云存储中。通过uniCloud提供的接口可以简单且完美解决tinymce的视频文件上传问题",
+	"keywords": [
+        "bctos-rich-editor",
+        "bctos-editor",
+        "parse",
+        "编辑器",
+        "视频本地上传"
+    ],
+	"repository": "https://gitee.com/bctos_cn/bctos-rich-editor.git",
+	"engines": {
+		"HBuilderX": "^3.1.0"
+	},
+	"dcloudext": {
+		"category": [
+			"前端组件",
+			"通用组件"
+		],
+		"sale": {
+			"regular": {
+				"price": "0.00"
+			},
+			"sourcecode": {
+				"price": "0.00"
+			}
+		},
+		"contact": {
+			"qq": "203163051"
+		},
+		"declaration": {
+			"ads": "无",
+			"data": "无",
+			"permissions": "无"
+		},
+		"npmurl": ""
+	},
+	"uni_modules": {
+		"dependencies": [],
+		"encrypt": [],
+		"platforms": {
+			"cloud": {
+				"tcb": "y",
+				"aliyun": "y"
+			},
+			"client": {
+				"Vue": {
+					"vue2": "y",
+					"vue3": "u"
+				},
+				"App": {
+					"app-vue": "u",
+					"app-nvue": "u"
+				},
+				"H5-mobile": {
+					"Safari": "y",
+					"Android Browser": "y",
+					"微信浏览器(Android)": "y",
+					"QQ浏览器(Android)": "y"
+				},
+				"H5-pc": {
+					"Chrome": "y",
+					"IE": "y",
+					"Edge": "y",
+					"Firefox": "y",
+					"Safari": "y"
+				},
+				"小程序": {
+					"微信": "u",
+					"阿里": "u",
+					"百度": "u",
+					"字节跳动": "u",
+					"QQ": "u"
+				},
+				"快应用": {
+					"华为": "u",
+					"联盟": "u"
+				}
+			}
+		}
+	}
+}

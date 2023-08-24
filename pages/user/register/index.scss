@@ -1,0 +1,10 @@
+.agreement {
+  display: flex;
+  align-items: center;
+  margin: 40rpx 0;
+
+  .agreement-text {
+    padding-left: 8rpx;
+    color: $u-tips-color;
+  }
+}
