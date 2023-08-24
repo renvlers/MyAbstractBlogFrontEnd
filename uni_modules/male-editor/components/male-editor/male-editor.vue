@@ -322,8 +322,21 @@
 					success: res => {
 						if (res.tapIndex === 0) {
 							// 本地选取 自已处理上传方法，包括选择文件
-							this.uploadFile(data => {
-								this.editorCtx.insertImage(data);
+							uni.chooseImage({
+								count: 1,
+								success: (chooseImageRes) => {
+									const tempFilePaths = chooseImageRes.tempFilePaths;
+									uni.uploadFile({
+										url: '/api/file/upload',
+										filePath: tempFilePaths[0],
+										name: 'file',
+										success: (uploadFileRes) => {
+											this.editorCtx.insertImage({
+												src: JSON.parse(uploadFileRes.data).data
+											});
+										}
+									});
+								}
 							});
 						} else {
 							this.modal = {
@@ -348,7 +361,7 @@
 				this.editorCtx.insertImage({
 					...inserdata,
 					success: function() {
-						console.log('insert image success')
+						console.log('insert image success');
 					}
 				})
 			}

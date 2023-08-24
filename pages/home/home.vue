@@ -11,7 +11,7 @@
 		</view>
 		<view class="container">
 			<view class="article-box" v-for="item of articles" :key="item.aid" @click="navigateToDetails(item.aid)">
-				<image :src="item.coverUrl ? item.coverUrl : '/static/svg/default-cover.svg'" alt="文章封面图"
+				<image :src="item.coverUrl !== null && item.coverUrl !== '' ? item.coverUrl : '/static/svg/default-cover.svg'" alt="文章封面图"
 					class="article-cover">
 					<view class="article-info">
 						<h1 class="title">{{item.title}}</h1>

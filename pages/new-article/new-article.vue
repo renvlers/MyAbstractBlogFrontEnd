@@ -3,7 +3,8 @@
 		<view class="container">
 			<uni-forms label-position="top" label-width="100%">
 				<uni-forms-item :label="translations.标题" name="title" :required="true">
-					<uni-easyinput v-model="formData.title" type="text" :maxlength="20" :placeholder="translations.请输入标题" />
+					<uni-easyinput v-model="formData.title" type="text" :maxlength="20"
+						:placeholder="translations.请输入标题" />
 				</uni-forms-item>
 				<uni-forms-item :label="translations.分类" name="type" :required="true">
 					<uni-data-select v-model="formData.type" style="background-color: white; border-radius: 10rpx;"
@@ -16,8 +17,10 @@
 					<uni-easyinput type="text" v-model="formData.tags" :placeholder="translations.请输入标签" />
 				</uni-forms-item>
 				<uni-forms-item :label="translations.封面" name="cover" :required="false">
-					<uni-file-picker ref="cover" :image-styles="gridStyle" file-mediatype="image" mode="grid"
-						file-extname="png,jpg,bmp,gif,jpeg,tiff" :limit="1" :del-icon="true" :auto-upload="false"/>
+					<image v-if=isCoverExists :src="formData.cover" alt="上传封面">
+						<button v-if="isCoverExists" class="red-button"
+							@click="cancelUploadCover()">{{translations.取消上传}}</button>
+						<button v-else class="green-button" @click="uploadCover()">{{translations.上传封面}}</button>
 				</uni-forms-item>
 				<uni-forms-item :label="translations.定时发布" name="intime" :required="false">
 					<label style="color: dimgray">
@@ -26,7 +29,8 @@
 						</checkbox-group>
 					</label>
 					<uni-datetime-picker v-model="formData.time" :disabled="!inTimeCheckBox.isEnabled"
-						style="margin-top: 30rpx;" :start="Date.now()" :placeholder="translations.请选择定时发布时间"></uni-datetime-picker>
+						style="margin-top: 30rpx;" :start="Date.now()"
+						:placeholder="translations.请选择定时发布时间"></uni-datetime-picker>
 				</uni-forms-item>
 			</uni-forms>
 		</view>
@@ -46,6 +50,7 @@
 	export default {
 		data() {
 			return {
+				isCoverExists: false,
 				inTimeCheckBox: {
 					isEnabled: false
 				},
@@ -67,35 +72,30 @@
 					isTiming: false,
 					time: null,
 					content: "",
-					cover: null
+					cover: ""
 				},
 				types: [],
-				cover: {
-					
-				},
 				translations: this.language === "en-US" ? English : Chinese
 
 			}
 		},
 		methods: {
-			postCover(){
-				this.$refs.cover.upload();
-			},
 			postArticle() {
 				console.log(this.formData);
 				console.log(this.inTimeCheckBox);
 				let postDto = {
 					a_content: this.formData.content,
-					a_cover_url: this.formData.cover,
-					a_deliver_time: this.formData.isTiming && this.formData.isTiming !== "" ? this.formData.time.split(" ").join("T"):
-						null,
+					a_cover_url: this.formData.cover === "" ? null : this.formData.cover,
+					a_deliver_time: this.formData.isTiming && this.formData.isTiming !== "" ? this.formData.time.split(
+						" ").join("T") : null,
 					a_tabloid: this.formData.tabloid,
 					a_tags: this.formData.tags,
 					a_title: this.formData.title,
 					cg_id: this.formData.type,
 					u_id: uni.getStorageSync('user').u_id
 				};
-				if (postDto.a_title == "" || +postDto.cg_id == 0 || postDto.a_tabloid == "" || postDto.a_content.trim() === "") {
+				if (postDto.a_title == "" || +postDto.cg_id == 0 || postDto.a_tabloid == "" || postDto.a_content.trim() ===
+					"") {
 					uni.showToast({
 						title: "请填写完整信息",
 						icon: "error"
@@ -126,7 +126,7 @@
 							});
 						},
 						fail: (error) => {
-							uni.request({
+							uni.showToast({
 								title: "投稿失败",
 								icon: "error"
 							});
@@ -137,6 +137,32 @@
 			changeCheckboxValue(detail) {
 				this.inTimeCheckBox.isEnabled = detail.detail.value[0] === 'enabled' ? true : false;
 				this.formData.isTiming = this.inTimeCheckBox.isEnabled;
+			},
+			uploadCover() {
+				uni.chooseImage({
+					count: 1,
+					success: (imgResponse) => {
+						uni.uploadFile({
+							url: "/api/file/upload",
+							filePath: imgResponse.tempFilePaths[0],
+							success: (response) => {
+								console.log(response.data);
+								this.formData.cover = JSON.parse(response.data).data;
+								this.isCoverExists = true;
+							},
+							fail: () => {
+								uni.showToast({
+									title: "封面上传失败",
+									icon: "error"
+								})
+							}
+						});
+					}
+				});
+			},
+			cancelUploadCover() {
+				this.formData.cover = "",
+				this.isCoverExists = false;
 			}
 		},
 		created() {

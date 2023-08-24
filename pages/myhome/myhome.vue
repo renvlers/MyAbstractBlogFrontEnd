@@ -86,6 +86,15 @@
 				translations: this.language === "en-US" ? English : Chinese
 			};
 		},
+		onPullDownRefresh() {
+			console.log('refresh');
+			setTimeout(function() {
+				uni.redirectTo({
+					url: '/pages/myhome/myhome'
+				})
+				uni.stopPullDownRefresh();
+			}, 1000);
+		},
 		async created() {
 			this.activeList = this.list2;
 

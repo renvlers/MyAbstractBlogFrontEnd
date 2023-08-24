@@ -122,11 +122,11 @@
 				})
 			},
 			redirectToDetail(id) {
-				localStorage.setItem('selected_item_id', id);
+				// Navigate to the detail page
 				uni.navigateTo({
-					url: '/pages/otherhome/otherhome'
+					url: `/pages/otherhome/otherhome?u_id=${id}` // Replace with your detail page route
 				});
-			},
+			}
 		}
 	};
 </script>

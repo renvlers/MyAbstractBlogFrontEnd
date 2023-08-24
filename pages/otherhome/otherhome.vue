@@ -9,6 +9,7 @@
 					</view>
 					<view class="signature-container">
 						<text class="signature">{{ userInfo.signature }}</text>
+						<button class="followBtn" @click="tapfollow">{{whetherfollow}}</button>
 					</view>
 				</view>
 				<view>
@@ -58,11 +59,15 @@
 				current: 0,
 				selectedIndex: 0,
 				activeList: [],
-				translations: this.language === "en-US" ? English : Chinese
+				translations: this.language === "en-US" ? English : Chinese,
+				uid: 0,
+				whetherfollow: '',
+				followcode: '',
+				isLogin: false,
 			};
 		},
 		async created() {
-			const itemID = localStorage.getItem('selected_item_id');
+			const itemID = this.uid;
 			this.activeList = this.list2; // 默认加载 list2
 
 			if (itemID) {
@@ -116,7 +121,8 @@
 				}
 			}
 		},
-		onLoad() {
+		onLoad(para) {
+			this.uid = para.u_id;
 			uni.setNavigationBarTitle({
 				title: this.translations.TA的主页
 			});
@@ -132,7 +138,146 @@
 				});
 			}
 		},
+		onPullDownRefresh() {
+			console.log('refresh');
+			let userid = this.uid;
+			setTimeout(function() {
+				uni.redirectTo({
+					url: `/pages/otherhome/otherhome?u_id=${userid}`
+				})
+				uni.stopPullDownRefresh();
+			}, 1000);
+		},
+		onShow() {
+			let user = uni.getStorageSync("user");
+
+			if (user) {
+				this.isLogin = true;
+				this.user = user;
+
+				const itemID = localStorage.getItem('selected_item_id');
+
+				if (this.uid) {
+					const u_id = user.u_id;
+					const use_u_id = parseInt(this.uid);
+
+					const requestData = {
+						u_id: u_id,
+						use_u_id: use_u_id
+					};
+					console.log(u_id, use_u_id);
+
+					uni.request({
+						url: '/api/user/isfollowed',
+						data: requestData,
+						method: 'get',
+						header: {
+							'content-type': 'application/json'
+						},
+						success: (res) => {
+							const isFollowedData = res.data;
+
+
+							if (isFollowedData.code == 200) {
+
+								if (isFollowedData.data == false) {
+									this.whetherfollow = this.translations.关注;
+									this.followcode = 0;
+								} else if (isFollowedData.data == true) {
+									this.whetherfollow = this.translations.取关;
+									this.followcode = 1;
+								} else {
+									console.error("Error: Unexpected response message");
+									this.whetherfollow = "错误";
+								}
+							} else {
+								console.error("Error:", isFollowedData.message);
+								this.whetherfollow = "错误";
+							}
+						},
+						fail: (err) => {
+							console.error("Error:", err);
+							this.whetherfollow = "错误";
+						}
+					});
+				} else {
+					this.whetherfollow = "错误";
+				}
+			} else {
+				this.isLogin = false;
+				this.whetherfollow = "未登录";
+				this.followcode = null;
+			}
+		},
 		methods: {
+			async tapfollow() {
+				if (!this.isLogin) {
+					// 处理用户未登录情况
+					console.log("用户未登录。");
+					return;
+				}
+
+				const u_id = this.user.u_id;
+				const use_u_id = parseInt(this.uid);
+
+				if (this.followcode === 0) {
+					// 关注用户
+					try {
+						const response = await fetch(`/api/user/follow`, {
+							method: 'POST',
+							headers: {
+								'Content-Type': 'application/json'
+							},
+							body: JSON.stringify({
+								u_id: u_id,
+								use_u_id: use_u_id
+							})
+						});
+
+						const responseData = await response.json();
+
+						if (responseData.code === 200) {
+							// 成功关注
+							this.whetherfollow = "取关";
+							this.followcode = 1;
+							this.$u.toast("关注成功");
+						} else {
+							// 处理关注失败情况
+							this.$u.toast("关注失败");
+						}
+					} catch (error) {
+						console.error("关注出错：", error);
+					}
+				} else if (this.followcode === 1) {
+					// 取消关注用户
+					const requestData = {
+						u_id: u_id,
+						use_u_id: use_u_id
+					};
+
+					console.log('Sending request with data:', requestData);
+
+					fetch(`/api/user/unfollow/${use_u_id}?u_id=${u_id}`, {
+							method: 'DELETE',
+						})
+						.then(response => response.json())
+						.then(data => {
+							if (data.code === 200) {
+								this.whetherfollow = "关注";
+								this.followcode = 1;
+								this.$u.toast('取关成功');
+
+							} else {
+								this.$u.toast('取关失败');
+							}
+						})
+						.catch(error => {
+							console.error('取消关注时出错：', error);
+							this.$u.toast('取关失败');
+						});
+
+				}
+			},
 			handleChange(index) {
 				this.selectedIndex = index; // 保存选中的 index
 				console.log("Current value after changing:", index);
@@ -174,7 +319,7 @@
 		padding: 20px;
 		background-size: cover;
 		background-position: center;
-		height: 250px;
+		height: 300px;
 		position: relative;
 	}
 
@@ -207,7 +352,7 @@
 
 	.signature {
 		color: #333;
-		font-size: 14px;
+		font-size: 16px;
 	}
 
 	.item {
@@ -227,5 +372,12 @@
 		font-size: 28rpx;
 		color: $u-content-color;
 		margin-top: 20rpx;
+	}
+
+	.followBtn {
+		background-color: rgba(204, 204, 204, 0.95);
+		width: 30%;
+		height: 35px;
+		font-size: 15px;
 	}
 </style>

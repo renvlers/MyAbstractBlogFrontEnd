@@ -313,5 +313,9 @@ export default {
 	修改语言: "Change Language",
 	个人信息修改: "Change Profiles",
 	修改正文字体: "Change Article Font",
-	默认字体: "Default Font"
+	默认字体: "Default Font",
+	取关: "Unfollow",
+	修改文章: "Edit Article",
+	上传封面: "Upload a Cover",
+	取消上传: "Cancel Cover Update"
 };

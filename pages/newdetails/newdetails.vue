@@ -1,7 +1,7 @@
 <template>
 	<view class="global-view">
 		<view class="container">
-			<view :class="{ 'dark-theme': darkTheme }">
+			<view class="dynamics-box" :class="{ 'dark-theme': darkTheme }">
 				<!-- User Info Box -->
 				<view class="u-flex user-box u-p-l-30 u-p-r-20 u-p-b-0">
 					<view class="u-m-r-10">
@@ -18,11 +18,11 @@
 				</view>
 
 				<!-- Dynamic Images -->
-				<view class="dynamic-images u-flex">
-					<image v-if="d_image1" :src="d_image1" class="dynamic-image"></image>
-					<image v-if="d_image2" :src="d_image2" class="dynamic-image"></image>
-					<image v-if="d_image3" :src="d_image3" class="dynamic-image"></image>
-					<image v-if="d_image4" :src="d_image4" class="dynamic-image"></image>
+				<view class="">
+					<image v-if="d_image1" :src="d_image1" ></image>
+					<image v-if="d_image2" :src="d_image2" ></image>
+					<image v-if="d_image3" :src="d_image3" ></image>
+					<image v-if="d_image4" :src="d_image4" ></image>
 				</view>
 			</view>
 		</view>
@@ -125,17 +125,28 @@
 
 	.dynamic-images {
 		margin-top: 10px;
-		display: flex;
-		flex-wrap: wrap;
-		justify-content: center;
 		/* Center images horizontally */
 	}
 
 	.dynamic-image {
-		width: calc(40% - 5px);
+		width: 50%;
 		/* Two images per row with a little margin */
 		margin: 5px;
 		/* Add some margin between images */
+	}
+	
+	.dynamics-box {
+		margin: 0 auto;
+		width: 100%;
+		background-color: white;
+		border-radius: 10rpx;
+		box-shadow: 0 0 3rpx lightgray;
+		padding: 20rpx;
+	}
+	
+	.dynamics-box image {
+		width: 100%;
+		border-radius: 10rpx;
 	}
 
 	/* Your existing styles */

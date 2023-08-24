@@ -1,13 +1,13 @@
 <template>
 	<view class="global-view" :class="{ 'dark-theme': darkTheme }">
-		<view class="cover-box" v-if="article.cover != '/static/svg/default-cover.svg'">
+		<view class="cover-box" v-if="article.cover !== null && article.cover !== ''">
 			<image :src="article.cover" alt="" srcset="">
 		</view>
 		<view class="container" id="the-article">
 			<view class="title-author-and-time">
 				<h1 class="article-details-title">{{article.title}}</h1>
 				<view class="author-and-time">
-					<span class="icon-with-text" @click="toProfile(article.author)">
+					<span class="icon-with-text" @click="toProfile(article.authorid)">
 						<image src="/static/svg/author.svg" alt="" class="small-icon">
 							{{article.author}}
 					</span>
@@ -42,6 +42,9 @@
 		<view v-if="article.tags.length!=0 && !(article.tags.length==1 && article.tags[0]==='')" class="container" id="tags">
 			<span v-for="items of article.tags">{{items}}</span>
 		</view>
+		<view v-if="isMyArticle" class="container">
+			<button class="edit-article" @click="editArticle(article.aid)">{{translations.修改文章}}</button>
+		</view>
 		<view class="container" id="button-likes-and-favorties">
 			<button @click="sendLike" class="likes-button">{{!isLiked?translations.点赞:translations.已点赞}}</button>
 			<button @click="sendFav" class="favorites-button">{{!isFavorite?translations.收藏:translations.已收藏}}</button>
@@ -53,7 +56,7 @@
 			</span>
 			<hr class="article-horizonal-line">
 			<view class="comment-box" v-for="(item, index) of comments" :key="-item.cid">
-				<view class="comment-user-avatar-and-nickname">
+				<view class="comment-user-avatar-and-nickname" @click="toProfile(item.uid)">
 					<image :src="item.avatar===null ? '/static/svg/default-avatar.svg' : item.avatar" alt="">
 						<view class="user-and-date">
 							<span>{{item.nickname}}</span>
@@ -112,6 +115,7 @@
 	export default {
 		data() {
 			return {
+				isMyArticle: false,
 				articleFont: {
 					fontFamily: uni.getStorageSync("font")
 				},
@@ -162,15 +166,20 @@
 		},
 		methods: {
 			toProfile(user) {
-				if(uni.getStorageSync("user").u_id === this.article.authorid){
+				if(uni.getStorageSync("user").u_id === user){
 					uni.navigateTo({
 						url: "/pages/myhome/myhome"
 					});
 				} else {
 					uni.navigateTo({
-						url: "/pages/otherhome/otherhome"
+						url: `/pages/otherhome/otherhome?u_id=${user}`
 					});
 				}
+			},
+			editArticle(aid) {
+				uni.redirectTo({
+					url: `/pages/editarticle/editarticle?aid=${aid}`
+				});
 			},
 			loadArticle(para) {
 				uni.request({
@@ -182,10 +191,11 @@
 						this.article.createTime = response.data.data.a_create_time;
 						this.article.tabloid = response.data.data.a_tabloid;
 						this.article.cover = response.data.data.a_cover_url === null ?
-							"/static/svg/default-cover.svg" : response.data.data.a_cover_url;
+							"" : response.data.data.a_cover_url;
 						this.article.content = response.data.data.a_content;
 						this.article.tags = response.data.data.a_tags.split(",").map((item) => item.trim());
 						this.article.authorid = response.data.data.u_id;
+						this.isMyArticle = this.article.authorid === uni.getStorageSync("user").u_id ? true : false;
 						uni.request({
 							url: `/api/user/getuser/${this.article.authorid}`,
 							method: "GET",
@@ -239,6 +249,7 @@
 										success: (res) => {
 											nick = res.data.data.u_nickname;
 											avatar = res.data.data.u_avatar_url;
+											console.log(avatar);
 											this.comments.push({
 												cid: i.c_id,
 												ctext: i.c_content,

@@ -1,43 +1,39 @@
 <template>
-	<view :class="{ 'dark-theme': darkTheme }">
+	<view>
 		<view class="wrap">
 			<view class="u-avatar-wrap">
-				<image style="width: 100px; height: 100px" class="u-avatar-demo" :src="avatar" mode="aspectFill">
-				</image>
+				<image style="width: 100px; height: 100px" class="u-avatar-demo" alt="头像无法正常加载" :src="user.u_avatar_url" mode="aspectFill" @click="chooseAvatar"></image>
 			</view>
-			<u-button @tap="chooseAvatar">{{translations.更换头像}}</u-button>
-			<u-form-item :label="translations.昵称">
+			<!-- <u-button @click="upload">上传头像</u-button> -->
+			<u-form-item label="昵称">
 				<u-input border="border" v-model="user.u_nickname" />
 			</u-form-item>
-			<u-form-item :label="translations.账号">
+			<u-form-item label="账号">
 				<u-input border="border" v-model="user.u_id" disabled />
 			</u-form-item>
-			<u-form-item :label="translations.性别">
+			<u-form-item label="性别">
 				<u-input v-model="user.u_gender" :type="type" :border="border" @click="show = true" />
 				<u-action-sheet :list="actionSheetList" v-model="show" @click="actionSheetCallback"></u-action-sheet>
 			</u-form-item>
-			<u-form-item :label="translations.生日">
+			<u-form-item label="生日">
 				<u-input border="border" v-model="user.u_birth_date" />
 				<u-calendar v-model="show_calendar" :mode="mode" @change="change"></u-calendar>
-				<u-button @click="choose()">{{translations.选择}}</u-button>
+				<u-button @click="choose()">选择</u-button>
 			</u-form-item>
-			<u-form-item :label="translations.邮箱">
+			<u-form-item label="邮箱">
 				<u-input border="border" v-model="user.u_email" disabled />
 			</u-form-item>
-			<button class="save" @click="save()" type="primary">{{translations.保存}}</button>
+			<button class="save" @click="save()" type="primary">保存</button>
 		</view>
 	</view>
 
 </template>
 
 <script>
-	import Chinese from '@/languages/zh-CN'
-	import English from '@/languages/en-US'
 	export default {
 		data() {
 			return {
-				translations: this.language === "en-US" ? English : Chinese,
-				avatar: 'https://cdn.uviewui.com/uview/common/logo.png',
+				avatar: '',
 				user: {
 					u_id: 0,
 					u_nickname: '',
@@ -68,21 +64,7 @@
 			uni.$on('uAvatarCropper', path => {
                 this.avatar = path;
 				// 可以在此上传到服务端
-				uni.uploadFile({
-					url: '/api/file/upload',
-					filePath: path,
-					name: 'file',
-					complete: (res) => {
-						console.log("upload-res:",res)
-						if(res.data.code === 200)
-						{
-							path = res.data.data
-							this.user.u_avatar_url = res.data.data
-							console.log("xxxx:",this.user)
-							this.save()
-						}
-					}
-				});
+				this.upload()
 			})
 		},
 		onShow() { //在页面显示的时候调用这个周期函数
@@ -93,23 +75,24 @@
 				this.user = user
 			}
 		},
-		onLoad(){
-			uni.setNavigationBarTitle({
-				title: this.translations.个人信息修改
-			});
-			if (this.darkTheme) {
-				uni.setNavigationBarColor({
-					frontColor: '#ffffff', // 这是文字颜色，设置为白色
-					backgroundColor: '#2a2a2a', // 这是背景颜色，设置为深色
-				});
-			} else {
-				uni.setNavigationBarColor({
-					frontColor: '#000000',
-					backgroundColor: '#f8f8f8'
-				});
-			}
-		},
 		methods: {
+			async upload(){
+				await uni.uploadFile({
+					url: '/api/file/upload',
+					filePath: this.avatar,
+					name: 'file',
+					success: (res) => {
+						let testData = JSON.parse(res.data)
+						console.log("upload-res:",testData.code)
+						if(testData.code === 200){
+							this.user.u_avatar_url = testData.data
+							console.log("xxxx:",this.user)
+							/* this.save()*/
+						}
+					}
+				});
+			},
+			
 			change(e) {
 				console.log("e:", e.result);
 				this.user.u_birth_date = e.result

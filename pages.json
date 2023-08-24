@@ -65,172 +65,167 @@
 				"enablePullDownRefresh": false
 			}
 
+		}, {
+			"path": "pages/search/search",
+			"style": {
+				"navigationBarTitleText": "搜索结果",
+				"enablePullDownRefresh": false
+			}
+
+		},
+		{
+			"path": "pages/forget/forget",
+			"style": {
+				"navigationBarTitleText": "找回密码",
+				"enablePullDownRefresh": false
+			}
+
+		},
+		{
+			"path": "pages/reset/reset",
+			"style": {
+				"navigationBarTitleText": "重置密码",
+				"enablePullDownRefresh": false
+			}
+
+		},
+		{
+			"path": "pages/verify/verify",
+			"style": {
+				"navigationBarTitleText": "验证邮箱",
+				"enablePullDownRefresh": false
+			}
+
+		},
+		{
+			"path": "pages/user/mySelf/mySelf",
+			"style": {
+				"navigationBarTitleText": "个人信息修改",
+				"enablePullDownRefresh": false
+			}
+
+		},
+		{
+			"path": "pages/user/personality/personality",
+			"style": {
+				"navigationBarTitleText": "个性签名",
+				"enablePullDownRefresh": false
+			}
+
+		},
+		{
+			"path": "pages/user/register/register",
+			"style": {
+				"navigationBarTitleText": "注册",
+				"enablePullDownRefresh": false
+			}
+
+		},
+		{
+			"path": "pages/set/set",
+			"style": {
+				"navigationBarTitleText": "设置",
+				"enablePullDownRefresh": false
+			}
+
+		},
+		{
+			"path": "pages/set/changepassword/changepassword",
+			"style": {
+				"navigationBarTitleText": "修改密码",
+				"enablePullDownRefresh": false
+			}
+
+		},
+		{
+			"path": "pages/card/card",
+			"style": {
+				"navigationBarTitleText": "修改密码",
+				"enablePullDownRefresh": false
+			}
+
+		},
+		{
+			"path": "pages/article_detail/article_detail",
+			"style": {
+				"navigationBarTitleText": "分类详情",
+				"enablePullDownRefresh": false
+			}
+
+		},
+		{
+			"path": "pages/myfans/myfans",
+			"style": {
+				"navigationBarTitleText": "我的粉丝",
+				"enablePullDownRefresh": false
+			}
+
+		},
+		{
+			"path": "pages/myfollow/myfollow",
+			"style": {
+				"navigationBarTitleText": "我的关注",
+				"enablePullDownRefresh": false
+			}
+
+		},
+		{
+			"path": "pages/myhome/myhome",
+			"style": {
+				"navigationBarTitleText": "我的主页",
+				"enablePullDownRefresh": true
+			}
+
+		},
+		{
+			"path": "pages/otherhome/otherhome",
+			"style": {
+				"navigationBarTitleText": "TA的主页",
+				"enablePullDownRefresh": true
+			}
+
+		},
+		{
+			"path": "pages/user/register/register_success/register_success",
+			"style": {
+				"navigationBarTitleText": "注册成功",
+				"enablePullDownRefresh": false
+			}
+
+		},
+		{
+			"path": "pages/about/about",
+			"style": {
+				"navigationBarTitleText": "关于",
+				"enablePullDownRefresh": false
+			}
+
 		}
-	    ,{
-            "path" : "pages/search/search",
-            "style" :                                                                                    
-            {
-                "navigationBarTitleText": "搜索结果",
-                "enablePullDownRefresh": false
-            }
-            
-        },
-		{
-		    "path" : "pages/forget/forget",
-		    "style" :                                                                                    
-		    {
-		        "navigationBarTitleText": "找回密码",
-		        "enablePullDownRefresh": false
-		    }
-		    
+
+
+		, {
+			"path": "pages/newdetails/newdetails",
+			"style": {
+				"navigationBarTitleText": "",
+				"enablePullDownRefresh": false
+			}
+
+		}, {
+			"path": "pages/editarticle/editarticle",
+			"style": {
+				"navigationBarTitleText": "",
+				"enablePullDownRefresh": false
+			}
+
 		},
 		{
-		    "path" : "pages/reset/reset",
-		    "style" :                                                                                    
-		    {
-		        "navigationBarTitleText": "重置密码",
-		        "enablePullDownRefresh": false
-		    }
-		    
-		},
-		{
-		    "path" : "pages/verify/verify",
-		    "style" :                                                                                    
-		    {
-		        "navigationBarTitleText": "验证邮箱",
-		        "enablePullDownRefresh": false
-		    }
-		    
-		},
-		{
-		    "path" : "pages/user/mySelf/mySelf",
-		    "style" :                                                                                    
-		    {
-		        "navigationBarTitleText": "个人信息修改",
-		        "enablePullDownRefresh": false
-		    }
-		    
-		},
-		{
-		    "path" : "pages/user/personality/personality",
-		    "style" :                                                                                    
-		    {
-		        "navigationBarTitleText": "个性签名",
-		        "enablePullDownRefresh": false
-		    }
-		    
-		},
-		{
-		    "path" : "pages/user/register/register",
-		    "style" :                                                                                    
-		    {
-		        "navigationBarTitleText": "注册",
-		        "enablePullDownRefresh": false
-		    }
-		    
-		},
-		{
-		    "path" : "pages/set/set",
-		    "style" :                                                                                    
-		    {
-		        "navigationBarTitleText": "设置",
-		        "enablePullDownRefresh": false
-		    }
-		    
-		},
-		{
-		    "path" : "pages/set/changepassword/changepassword",
-		    "style" :                                                                                    
-		    {
-		        "navigationBarTitleText": "修改密码",
-		        "enablePullDownRefresh": false
-		    }
-		    
-		},
-		{
-		    "path" : "pages/card/card",
-		    "style" :                                                                                    
-		    {
-		        "navigationBarTitleText": "修改密码",
-		        "enablePullDownRefresh": false
-		    }
-		    
-		},
-		{
-		    "path" : "pages/article_detail/article_detail",
-		    "style" :                                                                                    
-		    {
-		        "navigationBarTitleText": "分类详情",
-		        "enablePullDownRefresh": false
-		    }
-		    
-		},
-		{
-		    "path" : "pages/myfans/myfans",
-		    "style" :                                                                                    
-		    {
-		        "navigationBarTitleText": "我的粉丝",
-		        "enablePullDownRefresh": false
-		    }
-		    
-		},
-		{
-		    "path" : "pages/myfollow/myfollow",
-		    "style" :                                                                                    
-		    {
-		        "navigationBarTitleText": "我的关注",
-		        "enablePullDownRefresh": false
-		    }
-		    
-		},
-		{
-		    "path" : "pages/myhome/myhome",
-		    "style" :                                                                                    
-		    {
-		        "navigationBarTitleText": "我的主页",
-		        "enablePullDownRefresh": false
-		    }
-		    
-		},
-		{
-		    "path" : "pages/otherhome/otherhome",
-		    "style" :                                                                                    
-		    {
-		        "navigationBarTitleText": "TA的主页",
-		        "enablePullDownRefresh": false
-		    }
-		    
-		},
-		{
-		    "path" : "pages/user/register/register_success/register_success",
-		    "style" :                                                                                    
-		    {
-		        "navigationBarTitleText": "注册成功",
-		        "enablePullDownRefresh": false
-		    }
-		    
-		},
-		{
-		    "path" : "pages/about/about",
-		    "style" :                                                                                    
-		    {
-		        "navigationBarTitleText": "关于",
-		        "enablePullDownRefresh": false
-		    }
-		    
+			"path": "uview-ui/components/u-avatar-cropper/u-avatar-cropper",
+			"style": {
+				"navigationBarTitleText": "头像裁剪",
+				"navigationBarBackgroundColor": "#000000"
+			}
 		}
-		
-		
-        ,{
-            "path" : "pages/newdetails/newdetails",
-            "style" :                                                                                    
-            {
-                "navigationBarTitleText": "",
-                "enablePullDownRefresh": false
-            }
-            
-        }
-    ],
+	],
 	"tabBar": {
 		"color": "#aaaaaa",
 		"selectedColor": "#37d11c",
