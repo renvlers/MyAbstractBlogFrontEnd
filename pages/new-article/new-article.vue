@@ -81,57 +81,73 @@
 		},
 		methods: {
 			postArticle() {
-				console.log(this.formData);
-				console.log(this.inTimeCheckBox);
-				let postDto = {
-					a_content: this.formData.content,
-					a_cover_url: this.formData.cover === "" ? null : this.formData.cover,
-					a_deliver_time: this.formData.isTiming && this.formData.isTiming !== "" ? this.formData.time.split(
-						" ").join("T") : null,
-					a_tabloid: this.formData.tabloid,
-					a_tags: this.formData.tags,
-					a_title: this.formData.title,
-					cg_id: this.formData.type,
-					u_id: uni.getStorageSync('user').u_id
-				};
-				if (postDto.a_title == "" || +postDto.cg_id == 0 || postDto.a_tabloid == "" || postDto.a_content.trim() ===
-					"") {
+				if (!uni.getStorageSync("user")) {
 					uni.showToast({
-						title: "请填写完整信息",
-						icon: "error"
-					});
-				} else if (this.formData.isTiming && postDto.a_deliver_time === null) {
-					uni.showToast({
-						title: "请设置定时发布时间",
-					});
-				} else {
-					console.log(postDto);
-					uni.request({
-						url: "/api/article/create",
-						method: "POST",
-						data: postDto,
-						success: (response) => {
-							uni.showToast({
-								title: "投稿成功",
-								icon: "success",
-								success: () => {
-									this.formData.content = "";
-									this.formData = {};
-									setTimeout(() => {
-										uni.switchTab({
-											url: "/pages/home/home"
-										})
-									}, 1500);
-								}
-							});
-						},
-						fail: (error) => {
-							uni.showToast({
-								title: "投稿失败",
-								icon: "error"
-							});
+						title: "请先登录账号",
+						icon: "error",
+						success: () => {
+							setTimeout(() => {
+								uni.navigateTo({
+									url: "/pages/login/login",
+								})
+							}, 1500);
 						}
 					});
+				} else {
+					console.log(this.formData);
+					console.log(this.inTimeCheckBox);
+					let postDto = {
+						a_content: this.formData.content,
+						a_cover_url: this.formData.cover === "" ? null : this.formData.cover,
+						a_deliver_time: this.formData.isTiming && this.formData.isTiming !== "" ? this.formData.time
+							.split(
+								" ").join("T") : null,
+						a_tabloid: this.formData.tabloid,
+						a_tags: this.formData.tags,
+						a_title: this.formData.title,
+						cg_id: this.formData.type,
+						u_id: uni.getStorageSync('user').u_id
+					};
+					if (postDto.a_title == "" || +postDto.cg_id == 0 || postDto.a_tabloid == "" || postDto.a_content
+					.trim() ===
+						"") {
+						uni.showToast({
+							title: "请填写完整信息",
+							icon: "error"
+						});
+					} else if (this.formData.isTiming && postDto.a_deliver_time === null) {
+						uni.showToast({
+							title: "请设置定时发布时间",
+						});
+					} else {
+						console.log(postDto);
+						uni.request({
+							url: "/api/article/create",
+							method: "POST",
+							data: postDto,
+							success: (response) => {
+								uni.showToast({
+									title: "投稿成功",
+									icon: "success",
+									success: () => {
+										this.formData.content = "";
+										this.formData = {};
+										setTimeout(() => {
+											uni.reLaunch({
+												url: "/pages/home/home"
+											})
+										}, 1500);
+									}
+								});
+							},
+							fail: (error) => {
+								uni.showToast({
+									title: "投稿失败",
+									icon: "error"
+								});
+							}
+						});
+					}
 				}
 			},
 			changeCheckboxValue(detail) {
@@ -162,7 +178,7 @@
 			},
 			cancelUploadCover() {
 				this.formData.cover = "",
-				this.isCoverExists = false;
+					this.isCoverExists = false;
 			}
 		},
 		created() {
@@ -183,38 +199,24 @@
 					backgroundColor: '#f8f8f8'
 				});
 			}
-			if (!uni.getStorageSync("user")) {
-				uni.showToast({
-					title: "请先登录账号",
-					icon: "error",
-					success: () => {
-						setTimeout(() => {
-							uni.redirectTo({
-								url: "/pages/login/login"
-							})
-						}, 1500);
-					}
-				});
-			} else {
-				uni.request({
-					url: "/api/category/list",
-					success: (res) => {
-						for (let i of res.data.data) {
-							this.types.push({
-								text: i.cg_name,
-								value: i.cg_id,
-								disable: false
-							});
-						}
-					},
-					fail: () => {
-						uni.showToast({
-							title: "分类信息查询失败",
-							icon: "error"
+			uni.request({
+				url: "/api/category/list",
+				success: (res) => {
+					for (let i of res.data.data) {
+						this.types.push({
+							text: i.cg_name,
+							value: i.cg_id,
+							disable: false
 						});
 					}
-				});
-			}
+				},
+				fail: () => {
+					uni.showToast({
+						title: "分类信息查询失败",
+						icon: "error"
+					});
+				}
+			});
 		}
 	}
 </script>
