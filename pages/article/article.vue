@@ -82,7 +82,7 @@
 					<li ref="copy" @click="copyContent()">{{translations.复制}}</li>
 					<li v-if="isMine" @click="toggleEditTextBox()">{{translations.修改}}</li>
 					<li v-if="isMine" style="color: red;" @click="deleteComment()">{{translations.删除}}</li>
-					<li ref="cancel" @click="closeAllMenu()">{{translations.删除}}</li>
+					<li ref="cancel" @click="closeAllMenu()">{{translations.取消}}</li>
 				</ul>
 			</view>
 		</transition>
